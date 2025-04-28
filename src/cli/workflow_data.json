@@ -1,0 +1,65 @@
+
+{  
+    "user": {
+    "employee_id": "345412",
+    "employee_email": "harswagh@cdac.in",
+    "sla": "101012",
+    "employee_name": "Harshvardhan Wagh",
+    "designation": "PA",
+    "fla": "101011",
+    "role": "employee"
+    },
+    "parentWorkflowId":"",
+    "workflowName": "Gate Pass",
+    "workflowDescription": "For the Gate Pass",
+    "workflow_steps": [
+        {
+        "position": "1",
+        "step_user_role": "Employee",
+        "stepDescription": "",
+        "actions": ["submit", "cancel"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "",
+        "resumeStepPosition": "",
+        "nextStepPosition":"2",
+        "prevStepPosition":""
+        },
+        {
+        "position": "2",
+        "step_user_role": "Owner",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "2",
+        "nextStepPosition":"3",
+        "prevStepPosition":"1"
+        },
+        {
+        "position": "3",
+        "step_user_role": "MMG Manager",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "3",
+        "nextStepPosition":"4",
+        "prevStepPosition":"2"
+        },
+         {
+        "position": "4",
+        "step_user_role": "Final Approvar",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "4",
+        "nextStepPosition":"5",
+        "prevStepPosition":"3"
+        }
+    ]
+}

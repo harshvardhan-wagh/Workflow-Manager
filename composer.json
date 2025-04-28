@@ -1,0 +1,21 @@
+{
+    "name": "cdac/workflow-manager",
+    "description": "A modular workflow engine built in PHP.",
+    "type": "project",
+    "autoload": {
+      "psr-4": {
+        "WorkflowManager\\": "src/"
+      }
+    },
+    "require": {
+      "gabordemooij/redbean": "^5.7",
+        "robmorgan/phinx": "^0.16.7"
+    },
+    "scripts": {
+      "post-autoload-dump": [
+        "echo Autoload refreshed"
+      ]
+    },
+    "minimum-stability": "stable",
+    "license": "MIT"
+  }

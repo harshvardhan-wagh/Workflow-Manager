@@ -1,0 +1,15 @@
+{
+    "workflow_instance_id": "Wfi_199",
+    "userStepPosition": "2",
+    "nextStepEmployeeId":"345414",
+    "action":"approve",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+     }
+}
