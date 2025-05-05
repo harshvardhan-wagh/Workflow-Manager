@@ -29,6 +29,43 @@ class WorkflowService
     }
 
     /**
+     * Get  workflow by ID from the database.
+     */
+
+    public function getWorkflow(string $workflow_id) 
+    {
+        $workflowBean = $this->workflowModel->getWorkflow($workflow_id);
+        $workflow = [
+            'workflow_id' => $workflowBean['workflow_id_'],
+            'workflowName' => $workflowBean['workflow_name'],
+            'step_count' => $workflowBean['workflow_step_len'],
+            'created_by_user_id' => $workflowBean['created_by_user_id'],
+        ];
+
+        return $workflow;
+    }
+
+    /**
+     * Get all workflows from the database.
+     */
+    public function getAllWorkflows() 
+    {
+        $workflows = $this->workflowModel->getAll();
+        $workflowList = [];
+
+        foreach ($workflows as $workflow) {
+            $workflowList[] = [
+                'workflow_id' => $workflow['workflow_id_'],
+                'workflowName' => $workflow['workflow_name'],
+                'step_count' => $workflow['workflow_step_len'],
+                'created_by_user_id' => $workflow['created_by_user_id'],
+            ];
+        }
+
+        return $workflowList;
+    }
+
+    /**
      * Create and save a new workflow with steps.
      */
     public function createWorkflow(array $data)

@@ -25,4 +25,14 @@ class WorkflowController
         $data = WorkflowDataValidator::normalize($data);
         return $this->workflowService->createWorkflow($data);
     }
+    public function getAllWorkflows()
+    {
+        return $this->workflowService->getAllWorkflows();
+    }
+
+    public function getWorkflow(array $data)
+    {
+        $workflowId = $data['workflow_id_'] ?? null;
+        return $this->workflowService->getWorkflow($workflowId);
+    }
 }

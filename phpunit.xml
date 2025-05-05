@@ -1,0 +1,9 @@
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="WorkflowEngine Tests">
+            <directory>src/tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
