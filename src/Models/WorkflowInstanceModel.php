@@ -40,15 +40,15 @@ class WorkflowInstanceModel{
     }
 
 
-    public function get($workflow_instance_id_) {
-        return R::findone($this->tableName,'workflow_instance_id_ = ?' ,[$workflow_instance_id_]);
+    public function getById($workflow_instance_id_) {
+        return R::findOne($this->tableName,'workflow_instance_id_ = ?' ,[$workflow_instance_id_]);
     }
 
     public function getAll() {
         return R::findAll($this->tableName);
     }
     
-    public function getAllByUserId($userId,$workflowId){
+    public function getAllByUserAndEmpId($userId,$workflowId){
        
         return R::findAll($this->tableName, 'created_by_user_id = ? AND workflow_id_ = ?', [$userId,$workflowId]);
     }
@@ -98,5 +98,13 @@ class WorkflowInstanceModel{
       
         return R::findAll($this->tableName, 'workflow_id_ = ? AND workflow_instance_stage = ?', [$workflow_id,$userStepPosition]);
         
+    }
+
+    /**
+     * Nitesh added : Get workflowInstance by user id
+     */
+    public function getAllByUserId($employeeId){
+       
+        return R::findAll($this->tableName, 'created_by_user_id = ? ', [$employeeId]);
     }
 }

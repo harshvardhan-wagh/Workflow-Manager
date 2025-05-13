@@ -11,7 +11,8 @@ use WorkflowManager\Models\WorkflowModel;
 use WorkflowManager\Models\WorkflowStepModel;
 use WorkflowManager\Models\RevokeConditionModel;
 use WorkflowManager\Models\ActionLogModel;
-
+//Nitesh added : workflowVersionModel
+use WorkflowManager\Models\WorkflowVersionModel; 
 
 class WorkflowService
 {
@@ -19,6 +20,8 @@ class WorkflowService
     private $workflowModel;
     private $workflowStepModel;
     private $revokeConditionModel;
+    // Nitesh added : workflowVersionModel
+    private $workflowVersionModel;
 
     public function __construct(WorkflowRegistryService $registry)
     {
@@ -26,6 +29,7 @@ class WorkflowService
         $this->workflowModel = new WorkflowModel();
         $this->workflowStepModel = new workflowStepModel();
         $this->revokeConditionModel = new RevokeConditionModel();
+        $this->workflowVersionModel = new WorkflowVersionModel();
     }
 
     /**
@@ -353,6 +357,87 @@ class WorkflowService
     public function getLatestWorkflowVersionId(string $parentId): ?string
     {
         return $this->registry->getLatestWorkflowVersionId($parentId);
+    }
+
+    /**
+     * Nitesh: Get all workflows by parent ID with edge case handling
+     */
+    public function getWorkflowsByParentId(string $parentWorkflowId)
+    {
+        if (trim($parentWorkflowId) === '') {
+            return [
+                'status' => 'error',
+                'message' => 'Parent workflow ID cannot be empty',
+            ];
+        }
+
+        $workflowBeans = $this->workflowVersionModel->getWorkflowsByParentId($parentWorkflowId);
+
+        if (empty($workflowBeans)) {
+            return [
+                'status' => 'success',
+                'workflows' => [],
+                'message' => 'No workflows found for the given parentWorkflowId'
+            ];
+        }
+
+        $workflows = [];
+
+        foreach ($workflowBeans as $bean) {
+            $workflows[] = [
+                'workflow_id' => $bean->workflow_id,
+                'workflowName' => $bean->workflow_name,
+                'version' => $bean->version_of_workflow,
+                'description' => $bean->workflow_description,
+                'is_latest' => (bool)$bean->is_latest,
+                'is_active' => (bool)$bean->is_active,
+                'created_by' => $bean->created_by_user_id,
+                'version_timestamp' => $bean->version_timestamp
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'workflows' => $workflows
+        ];
+    }
+
+
+    /**
+     * Nitesh: Get the latest workflow version by parent ID
+     */
+    public function getLatestWorkflowByParentId(string $parentWorkflowId)
+    {
+        if (trim($parentWorkflowId) === '') {
+            return [
+                'status' => 'error',
+                'message' => 'Parent workflow ID cannot be empty',
+            ];
+        }
+
+        $bean = $this->workflowVersionModel->getLatestWorkflowByParentId($parentWorkflowId);
+
+        if (!$bean) {
+            return [
+                'status' => 'error',
+                'message' => 'No latest workflow found'
+            ];
+        }
+
+        $workflow = [
+            'workflow_id' => $bean->workflow_id,
+            'workflowName' => $bean->workflow_name,
+            'version' => $bean->version_of_workflow,
+            'description' => $bean->workflow_description,
+            'is_latest' => (bool)$bean->is_latest,
+            'is_active' => (bool)$bean->is_active,
+            'created_by' => $bean->created_by_user_id,
+        ];
+
+        return [
+            'status' => 'success',
+            'workflow' => $workflow
+        ];
     }
 
 

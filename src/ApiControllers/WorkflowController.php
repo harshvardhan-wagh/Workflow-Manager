@@ -35,4 +35,18 @@ class WorkflowController
         $workflowId = $data['workflow_id_'] ?? null;
         return $this->workflowService->getWorkflow($workflowId);
     }
+
+     //Nitesh: Added to get all workflows by parent ID
+     public function getWorkflowsByParentId(array $data)
+     {
+         $parentWorkflowId = $data['parent_workflow_id'] ?? null;
+         return $this->workflowService->getWorkflowsByParentId($parentWorkflowId);
+     }
+
+     //Nitesh: Added to get latest workflow by parent ID
+     public function getLatestWorkflowByParentId(array $data)
+     {
+         $parentWorkflowId = $data['parent_workflow_id'] ?? null;
+         return $this->workflowService->getLatestWorkflowByParentId($parentWorkflowId);
+     }
 }

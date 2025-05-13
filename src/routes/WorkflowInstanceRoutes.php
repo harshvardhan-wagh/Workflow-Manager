@@ -41,6 +41,54 @@ class WorkflowInstanceRoutes
             return true;
         }
 
+        /**
+         * Nitesh added : Get all workflowInstance
+         */
+        if ($uri === '/api/workflow-instance/getAll' && $method === 'GET') {
+            // AuthMiddleware::verify();
+            
+            try {
+                $workflowInstances = $controller->getAllWorkflowInstances();
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
+        /**
+         * Nitesh added : Get workflowInstance by id
+         */
+        if ($uri === '/api/workflow-instance/getByInstanceId' && $method === 'GET') {
+            // AuthMiddleware::verify();
+            $input = Request::input();
+            try {
+                $workflowInstances = $controller->getWorkflowInstanceById($input);
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
+        /**
+         * Nitesh added : Get workflowInstance by user id
+         */
+        if ($uri === '/api/workflow-instance/getAllByUserId' && $method === 'GET') {
+            // AuthMiddleware::verify();
+            $input = Request::input();
+            try {
+                $workflowInstances = $controller->getWorkflowInstanceByUserId($input);
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
         return false;
     }
 }

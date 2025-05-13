@@ -14,7 +14,7 @@ class WorkflowRoutes
     public static function handle($uri, $method)
     {
         if ($uri === '/api/workflow/create' && $method === 'POST') {
-            AuthMiddleware::verify();
+            AuthMiddleware::verify(); 
             $input = Request::input();
 
             try {
@@ -39,7 +39,7 @@ class WorkflowRoutes
         //-- Update Workflow By ID (If Needed)
 
         if ($uri === '/api/workflow/getAll' && $method === 'GET') {
-            AuthMiddleware::verify();
+            // AuthMiddleware::verify();
 
             try{
                 $registryService = new WorkflowRegistryService();
@@ -69,6 +69,46 @@ class WorkflowRoutes
                 Response::json([
                     'status' => 'success',
                     'workflows' => $workflows
+                ]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+        }
+
+        //Nitesh added : api to get all workflows by parent_id
+        if($uri === '/api/workflow/getAllByParentId' && $method === 'GET'){
+            // AuthMiddleware::verify();
+
+            $input = Request::input();
+            try{
+                $registryService = new WorkflowRegistryService();
+                $workflowService = new WorkflowService($registryService);
+                $controller = new WorkflowController($workflowService);
+                $workflows = $controller->getWorkflowsByParentId($input);
+
+                Response::json([
+                    'status' => 'success',
+                    'result' => $workflows
+                ]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+        }
+
+        //Nitesh added : api to get latest workflow by parent_id
+        if($uri === '/api/workflow/getLatestByParentId' && $method === 'GET'){
+            // AuthMiddleware::verify();
+
+            $input = Request::input();
+            try{
+                $registryService = new WorkflowRegistryService();
+                $workflowService = new WorkflowService($registryService);
+                $controller = new WorkflowController($workflowService);
+                $workflows = $controller->getLatestWorkflowByParentId($input);
+
+                Response::json([
+                    'status' => 'success',
+                    'result' => $workflows
                 ]);
             } catch (\Exception $e) {
                 Response::error($e->getMessage(), 400);
