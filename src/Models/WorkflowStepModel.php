@@ -33,6 +33,12 @@ class WorkflowStepModel {
         $steps = R::findAll('step', 'workflow_id_ = ?', [$workflow_id_],'ORDER BY step_position');
         return $steps;
     }
+
+    //Nitesh added to get step position by role and workflow id
+    public function getStepPositionByRole($workflow_id, $role) {
+        $step = R::findOne('step', 'workflow_id_ = ? AND step_user_role = ?', [$workflow_id, $role]);
+        return $step->step_position ?? null;
+    }
     
 }
 

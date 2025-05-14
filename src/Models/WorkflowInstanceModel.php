@@ -44,6 +44,10 @@ class WorkflowInstanceModel{
         return R::findOne($this->tableName,'workflow_instance_id_ = ?' ,[$workflow_instance_id_]);
     }
 
+    public function getByRoleAndPosition($workflow_instance_id_, $stepPosition) {
+        return R::findOne($this->tableName,'workflow_instance_id_ = ? AND workflow_instance_stage = ?' ,[$workflow_instance_id_, $stepPosition]);
+    }
+
     public function getAll() {
         return R::findAll($this->tableName);
     }

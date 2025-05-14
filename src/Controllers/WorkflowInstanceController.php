@@ -84,4 +84,22 @@ class WorkflowInstanceController
         return $this->workflowInstanceService->getWorkflowInstanceByUserId($employeeId);
     }
 
+    /**
+     * Nitesh added : Get workflowInstance by approver role
+     */
+    public function getWorkflowInstanceByApproverRole(array $data)
+    {
+        $workflow_id =  $data['workflow_id'] ?? null;
+
+        $role = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['role'] ?? null) 
+                    : null;
+
+        $employee_id = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['employee_id'] ?? null) 
+                    : null;
+        
+        return $this->workflowInstanceService->getWorkflowInstanceByApproverRole($workflow_id, $role, $employee_id);
+    }
+
 }
