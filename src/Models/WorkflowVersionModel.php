@@ -204,4 +204,41 @@ class WorkflowVersionModel
             return [];
         }
     }
+
+    /**
+     *Nitesh added: Get all workflow versions by parent_workflow_id 
+     * @param string $parent_workflow_id
+     * @return array
+     */
+    public function getWorkflowsByParentId($parent_workflow_id)
+    {
+        try {
+            return R::find('workflowversions', 
+                'parent_workflow_id = ?', 
+                [$parent_workflow_id]
+            );
+        } catch (\Exception $e) {
+            error_log("WorkflowVersionModel getWorkflowsByParentId failed: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     *Nitesh added: Get all workflow versions by parent_workflow_id 
+     * @param string $parent_workflow_id
+     * @return array
+     */
+    public function getLatestWorkflowByParentId($parent_workflow_id)
+    {
+        try {
+            return R::findOne('workflowversions', 
+                'parent_workflow_id = ? AND is_latest = 1', 
+                [$parent_workflow_id]
+            );
+        } catch (\Exception $e) {
+            error_log("WorkflowVersionModel getLatestWorkflowByParentId failed: " . $e->getMessage());
+            return null;
+        }
+    }
+    
 }

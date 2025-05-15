@@ -12,6 +12,7 @@ use WorkflowManager\Models\StateManagerModel;
 use WorkflowManager\Models\RevokeConditionModel;
 use WorkflowManager\Models\RevocationLogModel;
 use WorkflowManager\Models\ActionLogModel;
+use WorkflowManager\Models\WorkflowStepModel;
 
 
 class WorkflowInstanceService
@@ -23,6 +24,7 @@ class WorkflowInstanceService
     private $revokeConditionModel;
     private $revocationLogModel;
     private $actionLogModel;
+    private $workflowStepModel;
   
 
     public function __construct(WorkflowService $workflowService)
@@ -34,6 +36,7 @@ class WorkflowInstanceService
         $this->revokeConditionModel = new RevokeConditionModel();
         $this->revocationLogModel = new RevocationLogModel();
         $this->actionLogModel = new ActionLogModel();
+        $this->workflowStepModel = new WorkflowStepModel();
     }
 
 
@@ -322,7 +325,7 @@ class WorkflowInstanceService
 
     //?===========================================================================================================
 
-    //?====================================== Workflow Instance Process Action ====================================
+    //?====================================== Workflow Instance Process Action ===================================
    
     public function workflowInstanceProcessAction(array $data, $context)
     {
@@ -459,7 +462,214 @@ class WorkflowInstanceService
         ];
     }
 
-     //?==========================================================================================================
+    //?==========================================================================================================
 
- 
+    /**
+     *Nitesh added: Get all workflow instances from the database
+     * @return array
+     */
+    public function getAllWorkflowInstances() 
+    {
+        try {
+            $workflowInstances = $this->workflowInstanceModel->getAll();
+            // Edge Case: No data found
+            if (empty($workflowInstances)) {
+                return [
+                    'status' => 'success',
+                    'workflow_instances' => [],
+                    'message' => 'No workflow instances found.'
+                ];
+            }
+
+            $workflowInstanceList = [];
+
+            foreach ($workflowInstances as $instance) {
+                $workflowInstanceList[] = [
+                    'workflow_instance_id' => $instance['workflow_instance_id_'],
+                    'workflow_instance_name' => $instance['workflow_instance_name'],
+                    'workflow_id' => $instance['workflow_id_'],
+                    'workflow_instance_description' => $instance['workflow_instance_description'],
+                    'workflow_instance_stage' => $instance['workflow_instance_stage'],
+                    'created_by_user_id' => $instance['created_by_user_id'],
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'workflow_instances' => $workflowInstanceList
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getAllWorkflowInstances failed: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to retrieve workflow instances.',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     *Nitesh added: Get a workflow instance by its workflow_instance_id.
+     *
+     * @param string $workflowInstanceId
+     * @return array
+     */
+    public function getWorkflowInstanceById(string $workflowInstanceId)
+    {
+        // Edge case: empty ID input
+        if (trim($workflowInstanceId) === '') {
+            return [
+                'status' => 'error',
+                'message' => 'workflowInstanceId cannot be empty.'
+            ];
+        }
+
+        try {
+            $instance = $this->workflowInstanceModel->getById($workflowInstanceId);
+
+            // Edge case: not found
+            if (!$instance) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Workflow instance not found for ID: ' . $workflowInstanceId
+                ];
+            }
+
+            $workflowInstance = [
+                'workflow_instance_id' => $instance['workflow_instance_id_'],
+                'workflow_instance_name' => $instance['workflow_instance_name'],
+                'workflow_id' => $instance['workflow_id_'],
+                'workflow_instance_description' => $instance['workflow_instance_description'],
+                'workflow_instance_stage' => $instance['workflow_instance_stage'],
+                'created_by_user_id' => $instance['created_by_user_id'],
+            ];
+
+            return [
+                'status' => 'success',
+                'workflow_instance' => $workflowInstance
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getWorkflowInstanceById failed: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch workflow instance.',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     *Nitesh added: Get all workflow instances created by user from the database
+     * @return array
+     */
+    public function getWorkflowInstanceByUserId(string $employeeId) 
+    {
+        try {
+            $workflowInstances = $this->workflowInstanceModel->getAllByUserId($employeeId);
+            // Edge Case: No data found
+            if (empty($workflowInstances)) {
+                return [
+                    'status' => 'success',
+                    'workflow_instances' => [],
+                    'message' => 'No workflow instances found.'
+                ];
+            }
+
+            $workflowInstanceList = [];
+
+            foreach ($workflowInstances as $instance) {
+                $workflowInstanceList[] = [
+                    'workflow_instance_id' => $instance['workflow_instance_id_'],
+                    'workflow_instance_name' => $instance['workflow_instance_name'],
+                    'workflow_id' => $instance['workflow_id_'],
+                    'workflow_instance_description' => $instance['workflow_instance_description'],
+                    'workflow_instance_stage' => $instance['workflow_instance_stage'],
+                    'created_by_user_id' => $instance['created_by_user_id'],
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'workflow_instances' => $workflowInstanceList
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getAllWorkflowInstances failed: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to retrieve workflow instances.',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Nitesh added: Get all workflow instances pending at user role from the database.
+     *
+     * @param string $workflow_id
+     * @param string $role
+     * @param string  $employee_id
+     * @return array
+     */
+    public function getWorkflowInstanceByApproverRole(string $workflow_id, string $role, $employee_id): array
+    {
+        try {
+            // Step 1: Get current step position based on role
+            $stepPosition = $this->workflowStepModel->getStepPositionByRole($workflow_id, $role);
+
+            // Step 2: Get workflow steps for the given role and employee
+            $workflowInstanceSteps = $this->workflowInstanceStepModel->getAllWorkflowStepsByRole($workflow_id, $role, $employee_id);
+            
+            // Step 3: Return early if nothing found
+            if (empty($workflowInstanceSteps)) {
+                return [
+                    'status' => 'success',
+                    'workflow_instances' => [],
+                    'message' => 'No workflow instances found.'
+                ];
+            }
+
+            // Step 4: Build workflow instance list
+            $workflowInstanceList = [];
+
+            foreach ($workflowInstanceSteps as $step) {
+                $workflowInstanceId = $step['workflow_instance_id_'] ?? null;
+
+                if (!$workflowInstanceId) {
+                    continue; // Defensive: skip if ID is missing
+                }
+
+                $workflowInstanceBean = $this->workflowInstanceModel->getByRoleAndPosition($workflowInstanceId, $stepPosition);
+                if (!$workflowInstanceBean) {
+                    continue; // Defensive: skip if ID is missing
+                }
+
+                $workflowInstanceList[] = [
+                    'workflow_instance_id'         => $workflowInstanceBean['workflow_instance_id_'],
+                    'workflow_instance_name'       => $workflowInstanceBean['workflow_instance_name'] ?? '',
+                    'workflow_id'                  => $workflowInstanceBean['workflow_id_'],
+                    'workflow_instance_description'=> $workflowInstanceBean['workflow_instance_description'] ?? '',
+                    'workflow_instance_stage'      => $workflowInstanceBean['workflow_instance_stage'],
+                    'created_by_user_id'           => $workflowInstanceBean['created_by_user_id'],
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'workflow_instances' => $workflowInstanceList
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getWorkflowInstanceByApproverRole failed: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to retrieve workflow instances.',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+
 }
