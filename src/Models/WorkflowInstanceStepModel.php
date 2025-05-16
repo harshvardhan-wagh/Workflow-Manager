@@ -106,6 +106,27 @@ class WorkflowInstanceStepModel
 
     }
 
+            public function updateStepDynamicStatus($workflow_instance_step_id_, $status) {
+                $bean = R::findOne('workflowinstancestep', 'workflow_instance_step_id_ = ?', [$workflow_instance_step_id_]);
+
+                if (is_null($bean)) {
+                    return; // If the step is not found, exit the function
+                }
+
+                $isModified = false;
+
+                if ($bean->is_user_id_dynamic != $status) {
+                    $bean->is_user_id_dynamic = $status; // Update the dynamic status
+                    $isModified = true;
+                }
+
+                if ($isModified) {
+                    return R::store($bean); // Save the changes to the database
+                } else {
+                    return false; // No changes were made
+                }
+            }
+
     public function delete($WorkflowInstanceStep) {
         $bean = R::findOne($this->tableName, 'WorkflowInstance_step_id = ?', [$WorkflowInstanceStep->WorkflowInstance_step_id]);
         if ($bean->id) {
