@@ -3,6 +3,8 @@
 namespace WorkflowManager\ApiControllers;
 
 use WorkflowManager\Services\WorkflowInstanceService;
+// use WorkflowManager\Services\WorkflowService;
+// use WorkflowManager\Services\WorkflowRegistryService;
 use WorkflowManager\Validators\WorkflowInstanceDataValidator; 
 use WorkflowManager\Validators\WorkflowInstanceActionDataValidator; 
 use Exception;
@@ -10,7 +12,8 @@ use Exception;
 class WorkflowInstanceController
 {
     protected $workflowInstanceService;
-
+    // Nitesh added $workflowService;
+    protected $workflowService;
     public function __construct(workflowInstanceService $workflowInstanceService)
     {
         // Directly assign the injected service
@@ -79,6 +82,22 @@ class WorkflowInstanceController
     }
 
     /**
+     * Nitesh added : Get workflowInstance created by user for a active workflow using parent workflow id
+     */
+    public function getWorkflowInstanceByUserAndWorkflowId(array $data)
+    {
+        return $this->workflowInstanceService->getWorkflowInstanceByUserAndWorkflowId($data);
+    }
+
+    /**
+     * Nitesh added : Get workflowInstance Creation History by user and parent workflow id
+     */
+    public function getWorkflowInstanceHistory(array $data)
+    {
+        return $this->workflowInstanceService->getWorkflowInstanceHistory($data);
+    }
+
+    /**
      * Nitesh added : Get workflowInstance by approver role
      */
     public function getWorkflowInstanceByApproverRole(array $data)
@@ -94,6 +113,7 @@ class WorkflowInstanceController
                     : null;
         
         return $this->workflowInstanceService->getWorkflowInstanceByApproverRole($workflow_id, $role, $employee_id);
+
     }
 
 }
