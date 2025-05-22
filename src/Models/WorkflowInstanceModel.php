@@ -111,4 +111,12 @@ class WorkflowInstanceModel{
        
         return R::findAll($this->tableName, 'created_by_user_id = ? ', [$employeeId]);
     }
+
+    /**
+     * Nitesh added : Get workflowInstance by user id
+     */
+    public function getAllByUserAndWorkflowId($employeeId, $workflowId){
+       
+        return R::findAll($this->tableName, 'created_by_user_id = ?  AND workflow_id_ = ?', [$employeeId,$workflowId]);
+    }
 }

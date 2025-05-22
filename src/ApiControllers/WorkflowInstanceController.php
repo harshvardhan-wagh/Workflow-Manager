@@ -3,6 +3,8 @@
 namespace WorkflowManager\ApiControllers;
 
 use WorkflowManager\Services\WorkflowInstanceService;
+use WorkflowManager\Services\WorkflowService;
+use WorkflowManager\Services\WorkflowRegistryService;
 use WorkflowManager\Validators\WorkflowInstanceDataValidator; 
 use WorkflowManager\Validators\WorkflowInstanceActionDataValidator; 
 use Exception;
@@ -10,7 +12,8 @@ use Exception;
 class WorkflowInstanceController
 {
     protected $workflowInstanceService;
-
+    // Nitesh added $workflowService;
+    protected $workflowService;
     public function __construct(workflowInstanceService $workflowInstanceService)
     {
         // Directly assign the injected service
@@ -79,6 +82,57 @@ class WorkflowInstanceController
     }
 
     /**
+     * Nitesh added : Get workflowInstance created by user for a active workflow using parent workflow id
+     */
+    public function getWorkflowInstanceByUserAndWorkflowId(array $data)
+    {
+        $parent_workflow_id = $data['parent_workflow_id'] ?? null;
+        $registryService = new WorkflowRegistryService();
+        $workflowService = new workflowService($registryService);
+
+        $active_workflow =  $workflowService->getLatestWorkflowByParentId($parent_workflow_id);
+        $workflow_id =  $active_workflow['workflow']['workflow_id'] ?? null;
+
+        $employeeId = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['employee_id'] ?? null) 
+                    : null;
+
+        return $this->workflowInstanceService->getWorkflowInstanceByUserAndWorkflowId($employeeId, $workflow_id);
+    }
+
+    /**
+     * Nitesh added : Get workflowInstance Creation History by user and parent workflow id
+     */
+    public function getWorkflowInstanceHistory(array $data)
+    {
+        $parent_workflow_id = $data['parent_workflow_id'] ?? null;
+        $registryService = new WorkflowRegistryService();
+        $workflowService = new workflowService($registryService);
+
+        // Fetch workflows from the service
+        $response = $workflowService->getWorkflowsByParentId($parent_workflow_id);
+      
+        // Check if we have workflows
+        if ($response['status'] === 'success' && isset($response['workflows'])) {
+            $workflows = $response['workflows'];
+        } else {
+            return []; 
+        }
+       
+        foreach ($workflows as $workflow) {
+        
+            $workflow_id =  $workflow['workflow_id'] ?? null;
+            
+            $employeeId = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['employee_id'] ?? null) 
+                    : null;
+            
+            return $this->workflowInstanceService->getWorkflowInstanceByUserAndWorkflowId($employeeId, $workflow_id);
+        }
+
+    }
+
+    /**
      * Nitesh added : Get workflowInstance by approver role
      */
     public function getWorkflowInstanceByApproverRole(array $data)
@@ -94,6 +148,7 @@ class WorkflowInstanceController
                     : null;
         
         return $this->workflowInstanceService->getWorkflowInstanceByApproverRole($workflow_id, $role, $employee_id);
+
     }
 
 }

@@ -90,6 +90,38 @@ class WorkflowInstanceRoutes
         }
 
         /**
+         * Nitesh added : Get workflowInstance by user and parent workflow id
+         */
+        if ($uri === '/api/workflow-instance/getAllByUserAndWorkflowId' && $method === 'GET') {
+            // AuthMiddleware::verify();
+            $input = Request::input();
+            try {
+                $workflowInstances = $controller->getWorkflowInstanceByUserAndWorkflowId($input);
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
+        /**
+         * Nitesh added : Get workflowInstance History  by user and parent workflow id
+         */
+        if ($uri === '/api/workflow-instance/getInstanceHistory' && $method === 'GET') {
+            // AuthMiddleware::verify();
+            $input = Request::input();
+            try {
+                $workflowInstances = $controller->getWorkflowInstanceHistory($input);
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
+        /**
          * Nitesh added : Get workflowInstance by approver role
          */
         if ($uri === '/api/workflow-instance/getAllByApproverRole' && $method === 'GET') {
