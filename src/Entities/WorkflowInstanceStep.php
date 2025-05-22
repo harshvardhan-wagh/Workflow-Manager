@@ -57,7 +57,7 @@ class WorkflowInstanceStep {
     }
 
     public function moveToRevokeTarget() {
-        // If there's any condition set, just use the first one (simplified logic)
+        print_r($this->revokeConditions);
         if (!empty($this->revokeConditions)) {
             return $this->revokeConditions[0]->getTargetStepId();
         }
