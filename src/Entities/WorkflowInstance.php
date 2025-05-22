@@ -26,7 +26,7 @@ class WorkflowInstance {
         $this->created_by_user_id = $created_by_user_id;
     }
 
-    public function acceptStep($nextStepEmployeeId = null)
+    public function acceptStep($nextStepEmployeeIds = null)
     {
         try {
             $currentStep = $this->getCurrentStep();
@@ -53,24 +53,43 @@ class WorkflowInstance {
             }
     
             if ($currentStep->workflow_instance_next_step) {
+
+                $dynamicSteps = [];
                 $nextStep = $currentStep->workflow_instance_next_step;
-    
-                // Handle dynamic assignment
-                if ($nextStep->is_user_id_dynamic == "1") {
-                    if (!$nextStepEmployeeId) {
+
+                $employeeIndex = 0;
+               
+                while ($nextStep && $nextStep->is_user_id_dynamic == "1") {
+                    
+                    $stepId = $nextStep->workflow_instance_step_id_;
+                    if (!isset($nextStepEmployeeIds[$employeeIndex])) {
                         return [
                             'status' => 'error',
                             'action' => 'none',
-                            'message' => 'Next step requires dynamic user assignment but no user ID was provided.'
+                            'message' => "Dynamic user assignment required for step $stepId but no user ID was provided."
                         ];
                     }
-    
+
+                    $dynamicSteps[] = [
+                        'step_id' => $stepId,
+                        'user_id' =>$nextStepEmployeeIds[$employeeIndex]['user_id'],
+                        'role' => $nextStepEmployeeIds[$employeeIndex]['role']
+                    ];
+
+                   
+                    $nextStep->workflow_instance_step_user_id = $nextStepEmployeeIds[$employeeIndex]['user_id'];
+                    $nextStep->is_user_id_dynamic = "0"; 
+        
+                    $employeeIndex++;
+                    $nextStep = $nextStep->workflow_instance_next_step;
+                }
+        
+                if (!empty($dynamicSteps)) {
                     return [
                         'status' => 'success',
                         'action' => 'assign_dynamic_user',
-                        'message' => 'Dynamic user assignment required.',
-                        'step_id' => $nextStep->workflow_instance_step_id_,
-                        'user_id' => $nextStepEmployeeId
+                        'message' => 'Dynamic user assignment required for multiple steps.',
+                        'dynamic_steps' => $dynamicSteps
                     ];
                 }
     

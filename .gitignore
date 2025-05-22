@@ -4,11 +4,11 @@ vendor/
 # Ignore environment files (e.g., credentials, sensitive data)
 .env
 
-# Ignore db_conn.php
-src/Config/db_conn.php
+# # Ignore db_conn.php
+# src/Config/db_conn.php
 
-# Ignore the api.log file
-src/logs/api.log
+# # Ignore the api.log file
+# src/logs/api.log
 
 # Ignore PHPUnit test result cache files
 .phpunit.result.cache

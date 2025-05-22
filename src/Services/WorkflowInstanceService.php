@@ -111,7 +111,7 @@ class WorkflowInstanceService
         // Making list stage that requires the EmployeeID
         $requireUserIdList = $this->requireUserIdFind($workflow, $data);
 
-        $this->addStepToWorkflowInstanceEntity($workflow , $workflowInstance ,$requireUserIdList, null ,false);
+        $this->addStepsForNewWorkflowInstance($workflow , $workflowInstance ,$requireUserIdList);
 
         $this->saveWorkflowInstanceState($workflowInstance);
         
@@ -129,29 +129,21 @@ class WorkflowInstanceService
         );
     }
 
-    private function addStepToWorkflowInstanceEntity(
+    private function addStepsForNewWorkflowInstance(
         $workflow,
         $workflowInstance,
-        $requireUserIdList = null, 
-        $requireUserIdListFromDB = null,
-        bool $isFromDatabase = false
+        $requireUserIdList
     ) {
         $currentStep = $workflow->workflow_head_node;
         $lastInstanceStep = null;
-        $i = 0;
-
     
         while ($currentStep !== null) {
-
-            if (!$isFromDatabase && $currentStep->requires_user_id == "1") {
+            $instance_step_user_id = null;
+    
+            if ($currentStep->requires_user_id == "1") {
                 $instance_step_user_id = $this->findInstanceStepUserId($currentStep, $requireUserIdList);
-            }else if ($isFromDatabase && $currentStep->requires_user_id == "1") {
-                $instance_step_user_id = $requireUserIdListFromDB[$i]->workflow_instance_step_user_id ?? null;
-            }else {
-                $instance_step_user_id = null;
             }
     
-            // Create the instance step
             $instanceStep = new WorkflowInstanceStep(
                 $workflow->workflow_id_,
                 $workflowInstance->workflow_instance_id_,
@@ -164,7 +156,6 @@ class WorkflowInstanceService
                 $currentStep->step_description,
             );
     
-            // Add revoke conditions
             foreach ($currentStep->revokeConditions as $condition) {
                 $instanceStep->addRevokeCondition(
                     new RevokeCondition(
@@ -174,7 +165,6 @@ class WorkflowInstanceService
                 );
             }
     
-            // Link into doubly-linked list
             if ($lastInstanceStep === null) {
                 $workflowInstance->workflow_instance_steps_head_node = $instanceStep;
             } else {
@@ -184,7 +174,48 @@ class WorkflowInstanceService
     
             $lastInstanceStep = $instanceStep;
             $currentStep = $currentStep->step_next_step;
-            $i++;
+        }
+    }
+    
+    private function addStepsForExistingWorkflowInstance(
+        $workflow,
+        $workflowInstance,
+        $workflowInstanceStepBean
+    ) {
+        $lastInstanceStep = null;
+    
+        foreach ($workflowInstanceStepBean as $stepBean) {
+            $instanceStep = new WorkflowInstanceStep(
+                $workflow->workflow_id_,
+                $workflowInstance->workflow_instance_id_,
+                $stepBean->workflow_step_id_,
+                $workflowInstance->workflow_instance_id_ . '-' . $stepBean->workflow_step_id_,
+                $stepBean->step_position,
+                $stepBean->is_user_id_dynamic,
+                $stepBean->step_user_role,
+                $stepBean->workflow_instance_step_user_id,
+                $stepBean->workflow_instance_step_description,
+            );
+    
+            $revokeConditions = $this->revokeConditionModel->getRevokeConditionsForStep($stepBean->workflow_step_id_) ?? [];
+            
+            foreach ($revokeConditions as $condition) {
+                $instanceStep->addRevokeCondition(
+                    new RevokeCondition(
+                        $condition['target_step_id'],
+                        $condition['resume_step_id']
+                    )
+                );
+            }
+    
+            if ($lastInstanceStep === null) {
+                $workflowInstance->workflow_instance_steps_head_node = $instanceStep;
+            } else {
+                $lastInstanceStep->workflow_instance_next_step = $instanceStep;
+                $instanceStep->workflow_instance_previous_step = $lastInstanceStep;
+            }
+    
+            $lastInstanceStep = $instanceStep;
         }
     }
     
@@ -277,7 +308,7 @@ class WorkflowInstanceService
     public function createWorkflowInstanceFromDB($workflow_instance_id): WorkflowInstance
     {
         // Fetching Workflow Instance from Database
-        $workflowInstanceBean = $this->workflowInstanceModel->get($workflow_instance_id);
+        $workflowInstanceBean = $this->workflowInstanceModel->getById($workflow_instance_id);
 
         $workflowInstanceStepBean = $this->workflowInstanceStepModel->getWorkflowInstanceSteps($workflow_instance_id);
         
@@ -299,7 +330,7 @@ class WorkflowInstanceService
     {
         $workflowInstance = $this->createWorkflowInstanceEntity($workflow, $workflowInstanceBean);
 
-        $this->addStepToWorkflowInstanceEntity($workflow, $workflowInstance, null ,$workflowInstanceStepBean, true);
+        $this->addStepsForExistingWorkflowInstance($workflow, $workflowInstance, $workflowInstanceStepBean);
 
         $isRevoked = $this->stateManagerModel->isRevoked($workflowInstance->workflow_instance_id_);
         
@@ -382,9 +413,9 @@ class WorkflowInstanceService
           );
     }
 
-    private function processApproveAction($workflowInstance, $nextStepEmployeeId)
+    private function processApproveAction($workflowInstance, $nextStepEmployeeIds)
     {
-        $response = $workflowInstance->acceptStep($nextStepEmployeeId);
+        $response = $workflowInstance->acceptStep($nextStepEmployeeIds);
 
         if ($response['status'] === 'error') return $response;
 
@@ -398,9 +429,13 @@ class WorkflowInstanceService
 
     private function handleAssignDynamicUser($workflowInstance, $response)
     {
-        $this->workflowInstanceStepModel->updateStepUserId($response['step_id'], $response['user_id']);
+        foreach ($response['dynamic_steps'] as $step) {
+            $this->workflowInstanceStepModel->updateStepUserId($step['step_id'], $step['user_id']);
+            $this->workflowInstanceStepModel->updateStepDynamicStatus($step['step_id'], "0");
+        }
+
         $workflowInstance->workflow_instance_stage++;
-        return $this->processActionSuccessResponse('Dynamic user assigned and stage advanced.');
+        return $this->processActionSuccessResponse('Dynamic users assigned and stage advanced.');
     }
 
     private function handleFinalApproval($workflowInstance)
