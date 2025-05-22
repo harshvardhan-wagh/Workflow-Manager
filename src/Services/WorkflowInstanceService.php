@@ -609,10 +609,19 @@ class WorkflowInstanceService
      *Nitesh added: Get all workflow instances created by user from the database
      * @return array
      */
-    public function getWorkflowInstanceByUserAndWorkflowId(string $employeeId, string $workflowId) 
+    public function getWorkflowInstanceByUserAndWorkflowId(array $data) 
     {
+        $parent_workflow_id = $data['parent_workflow_id'] ?? null;
+
+        $active_workflow =  $this->workflowService->getLatestWorkflowByParentId($parent_workflow_id);
+
+        $workflow_id =  $active_workflow['workflow']['workflow_id'] ?? null;
+
+        $employeeId = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['employee_id'] ?? null) 
+                    : null;
         try {
-            $workflowInstances = $this->workflowInstanceModel->getAllByUserAndWorkflowId($employeeId, $workflowId);
+            $workflowInstances = $this->workflowInstanceModel->getAllByUserAndWorkflowId($employeeId, $workflow_id);
             // Edge Case: No data found
             if (empty($workflowInstances)) {
                 return [
@@ -649,6 +658,59 @@ class WorkflowInstanceService
             ];
         }
     }
+
+    /**
+     * Nitesh added: Get all workflow instances created by user for History
+     * @return array
+     */
+    public function getWorkflowInstanceHistory(array $data): array
+    {
+        $parentWorkflowId = $data['parent_workflow_id'] ?? null;
+
+        $employeeId = isset($data['user']) && is_array($data['user']) 
+            ? ($data['user']['employee_id'] ?? null) 
+            : null;
+
+        $response = $this->workflowService->getWorkflowsByParentId($parentWorkflowId);
+
+        if ($response['status'] !== 'success' || !isset($response['workflows'])) {
+            return [ 
+                'status' => 'error',
+                'message' => 'Workflows not found or failed to fetch.',
+                'workflow_instances' => [],
+            ]; 
+        }
+
+        $histories = []; 
+
+        foreach ($response['workflows'] as $workflow) {
+            $workflowId = $workflow['workflow_id'] ?? null;
+
+            if ($workflowId) {
+                // Get all instances for this workflow and user
+                $instances = $this->workflowInstanceModel->getAllByUserAndWorkflowId($employeeId, $workflowId);
+
+                foreach ($instances as $instance) {
+                    $histories[] = [
+                        'workflow_instance_id' => $instance['workflow_instance_id_'],
+                        'workflow_instance_name' => $instance['workflow_instance_name'],
+                        'workflow_id' => $instance['workflow_id_'],
+                        'workflow_instance_description' => $instance['workflow_instance_description'],
+                        'workflow_instance_stage' => $instance['workflow_instance_stage'],
+                        'created_at' => $instance['created_at'],
+                        'updated_at' => $instance['updated_at'],
+                        'created_by_user_id' => $instance['created_by_user_id'],
+                    ];
+                }
+            }
+        }
+
+        return [
+            'status' => 'success',
+            'workflow_instances' => $histories, 
+        ];
+    }
+
 
     /**
      * Nitesh added: Get all workflow instances pending at user role from the database.
