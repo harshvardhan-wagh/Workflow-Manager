@@ -646,7 +646,7 @@ class WorkflowInstanceService
      */
     public function getWorkflowInstanceByUserAndWorkflowId(array $data) 
     {
-        $parent_workflow_id = $data['parent_workflow_id'] ?? null;
+        $parent_workflow_id = $data['workflow_id'] ?? null;
 
         $active_workflow =  $this->workflowService->getLatestWorkflowByParentId($parent_workflow_id);
 
@@ -748,7 +748,73 @@ class WorkflowInstanceService
 
 
     /**
-     * Nitesh added: Get all workflow instances pending at user role from the database.
+     * Nitesh added: Get all workflow instances pending at user role and employee id from the database.
+     *
+     * @param string $workflow_id
+     * @param string $role
+     * @param string  $employee_id
+     * @return array
+     */
+    public function getWorkflowInstanceByApproverIdRole(string $workflow_id, string $role, $employee_id): array
+    {
+        try {
+            // Step 1: Get current step position based on role
+            $stepPosition = $this->workflowStepModel->getStepPositionByRole($workflow_id, $role);
+
+            // Step 2: Get workflow steps for the given role and employee
+            $workflowInstanceSteps = $this->workflowInstanceStepModel->getAllWorkflowStepsByIdRole($workflow_id, $role, $employee_id);
+            
+            // Step 3: Return early if nothing found
+            if (empty($workflowInstanceSteps)) {
+                return [
+                    'status' => 'success',
+                    'workflow_instances' => [],
+                    'message' => 'No workflow instances found.'
+                ];
+            }
+
+            // Step 4: Build workflow instance list
+            $workflowInstanceList = [];
+
+            foreach ($workflowInstanceSteps as $step) {
+                $workflowInstanceId = $step['workflow_instance_id_'] ?? null;
+
+                if (!$workflowInstanceId) {
+                    continue; // Defensive: skip if ID is missing
+                }
+
+                $workflowInstanceBean = $this->workflowInstanceModel->getByRoleAndPosition($workflowInstanceId, $stepPosition);
+                if (!$workflowInstanceBean) {
+                    continue; // Defensive: skip if ID is missing
+                }
+
+                $workflowInstanceList[] = [
+                    'workflow_instance_id'         => $workflowInstanceBean['workflow_instance_id_'],
+                    'workflow_instance_name'       => $workflowInstanceBean['workflow_instance_name'] ?? '',
+                    'workflow_id'                  => $workflowInstanceBean['workflow_id_'],
+                    'workflow_instance_description'=> $workflowInstanceBean['workflow_instance_description'] ?? '',
+                    'workflow_instance_stage'      => $workflowInstanceBean['workflow_instance_stage'],
+                    'created_by_user_id'           => $workflowInstanceBean['created_by_user_id'],
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'workflow_instances' => $workflowInstanceList
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getWorkflowInstanceByApproverIdRole failed: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to retrieve workflow instances.',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * HS added: Get all workflow instances pending at user role from the database.
      *
      * @param string $workflow_id
      * @param string $role
@@ -762,7 +828,7 @@ class WorkflowInstanceService
             $stepPosition = $this->workflowStepModel->getStepPositionByRole($workflow_id, $role);
 
             // Step 2: Get workflow steps for the given role and employee
-            $workflowInstanceSteps = $this->workflowInstanceStepModel->getAllWorkflowStepsByRole($workflow_id, $role, $employee_id);
+            $workflowInstanceSteps = $this->workflowInstanceStepModel->getAllWorkflowStepsByRole($workflow_id, $role);
             
             // Step 3: Return early if nothing found
             if (empty($workflowInstanceSteps)) {

@@ -122,7 +122,23 @@ class WorkflowInstanceRoutes
         }
 
         /**
-         * Nitesh added : Get workflowInstance by approver role
+         * Nitesh added : Get workflowInstance by approver role and user id
+         */
+        if ($uri === '/api/workflow-instance/getAllByApproverIdRole' && $method === 'GET') {
+            // AuthMiddleware::verify();
+            $input = Request::input();
+            try {
+                $workflowInstances = $controller->getWorkflowInstanceByApproverIdRole($input);
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
+        /**
+         * HS added : Get workflowInstance by approver role
          */
         if ($uri === '/api/workflow-instance/getAllByApproverRole' && $method === 'GET') {
             // AuthMiddleware::verify();

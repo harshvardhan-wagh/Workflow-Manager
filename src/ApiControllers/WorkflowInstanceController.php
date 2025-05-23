@@ -98,16 +98,43 @@ class WorkflowInstanceController
     }
 
     /**
-     * Nitesh added : Get workflowInstance by approver role
+     * Nitesh added : Get workflowInstance by approver role and user id
      */
-    public function getWorkflowInstanceByApproverRole(array $data)
+    public function getWorkflowInstanceByApproverIdRole(array $data)
     {
+
+        //! Please make validator class for validation of this API
+        // Don't Check in controller it self make new class
         $workflow_id =  $data['workflow_id'] ?? null;
 
         $role = isset($data['user']) && is_array($data['user']) 
                     ? ($data['user']['role'] ?? null) 
                     : null;
 
+        $employee_id = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['employee_id'] ?? null) 
+                    : null;
+        
+        return $this->workflowInstanceService->getWorkflowInstanceByApproverIdRole($workflow_id, $role, $employee_id);
+
+    }
+
+     /**
+     * HS added : Get workflowInstance by approver role
+     */
+    public function getWorkflowInstanceByApproverRole(array $data)
+    {
+
+        //! Please make validator class for validation of this API
+        // Don't Check in controller it self make new class
+        $workflow_id =  $data['workflow_id'] ?? null;
+
+        $role = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['role'] ?? null) 
+                    : null;
+
+        // Not need for employee id in this case
+        // But for consistency we are keeping it here
         $employee_id = isset($data['user']) && is_array($data['user']) 
                     ? ($data['user']['employee_id'] ?? null) 
                     : null;

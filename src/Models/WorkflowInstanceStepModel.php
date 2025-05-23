@@ -147,10 +147,17 @@ class WorkflowInstanceStepModel
     }
 
     // Nitesh added: to get all the workflowInstanceStep created for a pending at particular user role
-    public function getAllWorkflowStepsByRole($workflow_id, $role, $employee_id) {
+    public function getAllWorkflowStepsByIdRole($workflow_id, $role, $employee_id) {
         $WorkflowInstanceSteps = R::findAll($this->tableName, 'workflow_id_ = ? AND workflow_instance_step_user_role = ? AND workflow_instance_step_user_id = ? ', [$workflow_id, $role, $employee_id]);
         return $WorkflowInstanceSteps;
     }
+
+    public function getAllWorkflowStepsByRole($workflow_id, $role) {
+        $WorkflowInstanceSteps = R::findAll($this->tableName, 'workflow_id_ = ? AND workflow_instance_step_user_role = ? ', [$workflow_id, $role]);
+        return $WorkflowInstanceSteps;
+    }
+
+
 
     // Nitesh added: to delete all the workflowInstanceStep created for a workflowInstance
     public function deleteAllbyInstanceId($WorkflowInstance_id_) {
