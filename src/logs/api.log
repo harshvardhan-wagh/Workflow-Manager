@@ -174,3 +174,291 @@
 [2025-05-23 09:00:17] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
 [2025-05-23 09:00:19] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
 [2025-05-23 09:00:46] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole | User: 345412
+[2025-05-26 06:42:54] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 07:02:15] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 07:02:27] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345412
+[2025-05-26 07:05:25] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 
+[2025-05-26 07:08:07] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345412
+[2025-05-26 07:12:32] IP: 10.180.6.74 | POST //Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 
+[2025-05-26 07:12:44] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 
+[2025-05-26 07:12:47] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole | User: 345412
+[2025-05-26 07:12:53] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 
+[2025-05-26 07:13:45] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345875
+[2025-05-26 07:14:23] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345875
+[2025-05-26 07:14:42] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345414
+[2025-05-26 07:15:08] IP: 10.180.6.74 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345414
+[2025-05-26 07:16:23] IP: 10.180.6.74 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345875
+[2025-05-26 07:20:45] IP: 10.180.6.74 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 10:37:29] IP: 10.180.130.22 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole?data=%7B%22workflow_id%22%3A%22wf_466%22%2C%22user%22%3A%7B%22employee_id%22%3A%22102082%22%2C%22role%22%3A%22fla%22%7D%7D | User: 
+[2025-05-26 10:41:39] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 10:42:10] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 10:42:13] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 10:43:08] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole | User: 345412
+[2025-05-26 10:43:37] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345412
+[2025-05-26 10:43:44] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345412
+[2025-05-26 10:46:47] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 10:47:42] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole?data=%7B%22workflow_id%22%3A%22wf_466%22%2C%22user%22%3A%7B%22employee_id%22%3A%22102082%22%2C%22role%22%3A%22fla%22%7D%7D | User: 
+[2025-05-26 10:50:05] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole?data={"workflow_id":"wf_466","user":{"employee_id":"102082","role":"fla"}} | User: 
+[2025-05-26 10:51:06] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 10:52:54] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 10:54:21] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 10:55:19] IP: 10.180.6.74 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:00:28] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:06:43] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:11:53] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:12:54] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:14:23] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:21:50] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314 | input data : Array 
+[2025-05-26 11:29:37] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 11:30:17] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:31:43] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:32:24] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:33:34] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:34:45] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 11:35:00] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:37:01] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole?test=test | User: 
+[2025-05-26 11:37:28] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole?%7B%22workflow_id%22:%22wf_466%22,%22user%22:%7B%22employee_id%22:%22102082%22,%22role%22:%22fla%22%7D%7D | User: 
+[2025-05-26 11:41:05] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 11:43:26] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 345314
+[2025-05-26 11:43:45] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:44:08] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:45:10] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:46:20] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:47:24] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 
+[2025-05-26 11:47:24] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:48:36] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole?data={"workflow_id":"wf_466","user":{"employee_id":"102082","role":"fla"}} | User: 
+[2025-05-26 11:49:12] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:50:56] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:52:13] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:52:49] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+[2025-05-26 11:53:14] IP: 10.180.130.22 | POST /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole | User: 102082
+
+====================================================================================================
+[2025-05-26 11:54:05] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole
+User ID: 102082
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "6161a4b3-4cc0-4ff5-88e9-61c5b5dc4da9",
+    "Host": "localhost",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "289"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-26 11:55:49] API REQUEST
+IP: 10.180.130.22
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole
+User ID: 102082
+Headers: {
+    "Host": "10.180.6.66",
+    "Content-Type": "application\/json",
+    "Accept": "application\/json",
+    "Authorization": "Bearer",
+    "Content-Length": "69"
+}
+Content-Type: application/json
+Raw Request Body: {"workflow_id":"wf_466","user":{"employee_id":"102082","role":"fla"}}
+Processed Input: {
+    "workflow_id": "wf_466",
+    "user": {
+        "employee_id": "102082",
+        "role": "fla"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-26 12:19:26] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole
+User ID: 102082
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "eb99a8bc-bab6-4b08-8275-ab12ee1286e6",
+    "Host": "localhost",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "289"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-26 12:28:12] API REQUEST
+IP: 10.180.130.22
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/create
+User ID: 345875
+Headers: {
+    "Host": "10.180.6.66",
+    "Accept": "*\/*",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "Content-Type": "application\/json",
+    "Content-Length": "203"
+}
+Content-Type: application/json
+Raw Request Body: {"fla":"102082","sla":"101788","group_head":"101788","pi":"210902","workflow_id":"wf_466","user":{"employee_id":"345875","employee_email":"vijaysn@cdac.in","employee_name":"Vijay S N","role":"employee"}}
+Processed Input: {
+    "fla": "102082",
+    "sla": "101788",
+    "group_head": "101788",
+    "pi": "210902",
+    "workflow_id": "wf_466",
+    "user": {
+        "employee_id": "345875",
+        "employee_email": "vijaysn@cdac.in",
+        "employee_name": "Vijay S N",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-26 12:59:04] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole
+User ID: 102082
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "53e06057-0ace-4c42-ad3b-e51a62d3e12f",
+    "Host": "localhost",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "289"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-26 16:30:32] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverIdRole
+User ID: 102082
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "6c33128d-14f1-4bd0-8544-9e7e30f247e1",
+    "Host": "localhost",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "289"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_466",
+    "user": {
+        "employee_id": "102082",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "fla"
+    }
+}
+====================================================================================================
