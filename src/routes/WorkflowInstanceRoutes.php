@@ -76,7 +76,7 @@ class WorkflowInstanceRoutes
         /**
          * Nitesh added : Get workflowInstance by user id
          */
-        if ($uri === '/api/workflow-instance/getAllByUserId' && $method === 'GET') {
+        if ($uri === '/api/workflow-instance/getAllByUserId' && $method === 'POST') {
             // AuthMiddleware::verify();
             $input = Request::input();
             try {
@@ -92,7 +92,7 @@ class WorkflowInstanceRoutes
         /**
          * Nitesh added : Get workflowInstance by user and parent workflow id
          */
-        if ($uri === '/api/workflow-instance/getAllByUserAndWorkflowId' && $method === 'GET') {
+        if ($uri === '/api/workflow-instance/getAllByUserAndWorkflowId' && $method === 'POST') {
             // AuthMiddleware::verify();
             $input = Request::input();
             try {
@@ -108,7 +108,7 @@ class WorkflowInstanceRoutes
         /**
          * Nitesh added : Get workflowInstance History  by user and parent workflow id
          */
-        if ($uri === '/api/workflow-instance/getInstanceHistory' && $method === 'GET') {
+        if ($uri === '/api/workflow-instance/getInstanceHistory' && $method === 'POST') {
             // AuthMiddleware::verify();
             $input = Request::input();
             try {
@@ -122,9 +122,26 @@ class WorkflowInstanceRoutes
         }
 
         /**
-         * Nitesh added : Get workflowInstance by approver role
+         * Nitesh added : Get workflowInstance by approver role and user id
          */
-        if ($uri === '/api/workflow-instance/getAllByApproverRole' && $method === 'GET') {
+        if ($uri === '/api/workflow-instance/getAllByApproverIdRole' && $method === 'POST') {
+            // AuthMiddleware::verify();
+            $input = Request::input();
+
+            try {
+                $workflowInstances = $controller->getWorkflowInstanceByApproverIdRole($input);
+                Response::json(['status' => 'success', 'result' => $workflowInstances]);
+            } catch (\Exception $e) {
+                Response::error($e->getMessage(), 400);
+            }
+
+            // return true;
+        }
+
+        /**
+         * HS added : Get workflowInstance by approver role
+         */
+        if ($uri === '/api/workflow-instance/getAllByApproverRole' && $method === 'POST') {
             // AuthMiddleware::verify();
             $input = Request::input();
             try {
