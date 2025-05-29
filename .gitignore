@@ -5,7 +5,7 @@ vendor/
 .env
 
 # # Ignore db_conn.php
-# src/Config/db_conn.php
+src/Config/db_conn.php
 
 # # Ignore the api.log file
 # src/logs/api.log

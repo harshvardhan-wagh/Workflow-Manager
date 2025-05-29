@@ -118,3 +118,10 @@
 [2025-05-16 09:08:23] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/action | User: 345412
 [2025-05-16 09:08:33] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/action | User: 345412
 [2025-05-16 09:08:37] IP: 127.0.0.1 | POST /Workflow-Manager/public/index.php/api/workflow-instance/action | User: 345412
+[2025-05-23 07:12:02] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory | User: 345412
+[2025-05-23 07:12:08] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345412
+[2025-05-23 07:13:24] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole | User: 566565
+[2025-05-23 07:32:50] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole | User: 566565
+[2025-05-23 07:33:19] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole | User: 566565
+[2025-05-23 07:33:24] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId | User: 345412
+[2025-05-23 07:39:11] IP: 127.0.0.1 | GET /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory | User: 345412
