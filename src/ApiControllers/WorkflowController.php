@@ -19,7 +19,8 @@ class WorkflowController
     {
         $result = WorkflowDataValidator::validate($data);
         if (!$result['status']) {
-            throw new Exception($result['message']);
+            // throw new Exception($result['message']);
+            return false; // Nitesh: Return false if validation fails
         }
 
         $data = WorkflowDataValidator::normalize($data);

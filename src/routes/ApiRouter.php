@@ -32,7 +32,7 @@ class ApiRouter
         if (WorkflowInstanceRoutes::handle($normalizedUri, $method)) return;
 
         // Route not found
-        Response::error('Route not found', 404);
+        Response::error('Route not found',[], 404);
     }
 
     // function logApiRequest($ip, $userEmpId, $method, $uri) {

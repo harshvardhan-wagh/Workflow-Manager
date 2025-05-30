@@ -462,3 +462,1901 @@ Processed Input: {
     }
 }
 ====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:27:32] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "26a15b1a-9d85-43dd-9773-666a427824d3",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:27:43] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "195f6157-c905-4929-8573-9022852a658b",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:35:27] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "c990d4e2-e7d6-4e23-ab20-587b8aabe455",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:36:24] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "781e1791-7be7-4622-910c-d9511f96f73c",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:38:43] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "a754d8e8-3ad6-435a-bd11-3bd29bf8d8ae",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:39:52] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "c9bee932-f17f-43a6-9f2a-15c2c6094d55",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:42:13] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "a408afa8-08e6-4234-9700-36f1b4aeef23",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "291"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:42:23] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "16dc7ea3-92f2-4120-8846-0cef08abf628",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "291"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:55:34] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "2642a0c8-3f56-487c-878d-68f2f617eb9b",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:55:39] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "e3bf1268-f720-433a-be20-ddc3a9876f61",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:55:45] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "98898450-5345-45f4-be03-479b99d42f52",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_417",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_417",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:56:06] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserAndWorkflowId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "9a94ac38-b067-4dfd-9a6f-f9c84d24a4e0",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "301"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_417",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_417",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:56:10] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "baf2407b-87e5-4c89-9864-b74d84f58bb6",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "291"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:56:23] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAll
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "3dc99428-4393-4262-952b-6bae9504223a",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "266"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:56:35] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/action
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "4c442882-cb8c-49ce-ac54-38e893df0e91",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "397"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_instance_id": "Wfi_207",
+    "userStepPosition": "2",
+    "nextStepEmployeeId": "345414",
+    "action": "approve",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "workflow_instance_id": "Wfi_207",
+    "userStepPosition": "2",
+    "nextStepEmployeeId": "345414",
+    "action": "approve",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:58:04] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAll
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "fb64c61d-2461-4d14-85b1-b70aaaa04c43",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "266"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 10:58:55] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAll
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "0b48270a-7935-41d4-9c40-daf3fe98cced",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "266"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:00:09] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getInstanceHistory
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "e7f02508-398e-41e4-940f-329f218a7a30",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "306"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "parent_workflow_id": "Wf_56875393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "parent_workflow_id": "Wf_56875393",
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:00:18] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "28fee641-dfc0-4e98-b703-721eb000443a",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "291"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:00:26] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "37e5d3bc-a043-4544-9993-306d52e7de78",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "295"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_4404545",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_4404545",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:07:09] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAll
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "da1790cc-c8ec-4efe-b2ca-dd9264e701f1",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "266"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:08:34] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getByInstanceId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "a83d71ae-9c81-4020-91fb-80bc8bd2cf45",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "304"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:12:49] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getByInstanceId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "312e29a1-8fb8-40cb-949e-5e4703bd7855",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "304"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:14:51] API REQUEST
+IP: 127.0.0.1
+Method: GET
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "c6ab632d-06e1-4b2f-b8c2-64d925fe504d",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "264"
+}
+Content-Type: application/json
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:14:57] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "81bf21aa-b434-4de3-ae90-d5647a4fad3e",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "264"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:20:51] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserId
+User ID: 3454175782
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "fb86c1b0-805f-4d1f-bd54-1022ad19f4b6",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "268"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "user": {
+        "employee_id": "3454175782",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "user": {
+        "employee_id": "3454175782",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:21:09] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserId
+User ID: 3454175782
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "21cc1d8c-d790-4872-8466-c3d208ab5423",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "268"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "user": {
+        "employee_id": "3454175782",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "user": {
+        "employee_id": "3454175782",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:33:25] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByUserId
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "0af9398a-2b5e-415d-81f9-31f201589ae9",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "264"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+Processed Input: {
+    "user": {
+        "employee_id": "345412",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "employee"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:35:30] API REQUEST
+IP: 10.180.6.66
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow/create
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "06112a26-ee34-4f70-9603-d23ac76230b8",
+    "Host": "10.180.4.157",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "3313"
+}
+Content-Type: application/json
+Raw Request Body: 
+{  
+    "user": {
+    "employee_id": "345412",
+    "role": "employee"
+    },
+    "parentWorkflowId":"Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+        "position": "1",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["submit", "cancel"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "",
+        "resumeStepPosition": "",
+        "nextStepPosition":"2",
+        "prevStepPosition":""
+        },
+        {
+        "position": "2",
+        "step_user_role": "fla",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "2",
+        "nextStepPosition":"3",
+        "prevStepPosition":"1"
+        },
+        {
+        "position": "3",
+        "step_user_role": "mmg",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "3",
+        "nextStepPosition":"4",
+        "prevStepPosition":"2"
+        },
+         {
+        "position": "4",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "4",
+        "nextStepPosition":"5",
+        "prevStepPosition":"3"
+        },
+         {
+        "position": "5",
+        "step_user_role": "group_head",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "5",
+        "nextStepPosition":"6",
+        "prevStepPosition":"4"
+        },
+         {
+        "position": "6",
+        "step_user_role": "finance_admin",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "6",
+        "nextStepPosition":"7",
+        "prevStepPosition":"5"
+        },
+         {
+        "position": "7",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "7",
+        "nextStepPosition":"8",
+        "prevStepPosition":"6"
+        },
+         {
+        "position": "8",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "8",
+        "nextStepPosition":"",
+        "prevStepPosition":"7"
+        }
+
+    ]
+}
+
+Processed Input: {
+    "user": {
+        "employee_id": "345412",
+        "role": "employee"
+    },
+    "parentWorkflowId": "Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+            "position": "1",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "submit",
+                "cancel"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "",
+            "resumeStepPosition": "",
+            "nextStepPosition": "2",
+            "prevStepPosition": ""
+        },
+        {
+            "position": "2",
+            "step_user_role": "fla",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "2",
+            "nextStepPosition": "3",
+            "prevStepPosition": "1"
+        },
+        {
+            "position": "3",
+            "step_user_role": "mmg",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "3",
+            "nextStepPosition": "4",
+            "prevStepPosition": "2"
+        },
+        {
+            "position": "4",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "4",
+            "nextStepPosition": "5",
+            "prevStepPosition": "3"
+        },
+        {
+            "position": "5",
+            "step_user_role": "group_head",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "5",
+            "nextStepPosition": "6",
+            "prevStepPosition": "4"
+        },
+        {
+            "position": "6",
+            "step_user_role": "finance_admin",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "6",
+            "nextStepPosition": "7",
+            "prevStepPosition": "5"
+        },
+        {
+            "position": "7",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "7",
+            "nextStepPosition": "8",
+            "prevStepPosition": "6"
+        },
+        {
+            "position": "8",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "8",
+            "nextStepPosition": "",
+            "prevStepPosition": "7"
+        }
+    ]
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:36:11] API REQUEST
+IP: 10.180.6.66
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow/create
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "d061c0a4-9801-4b37-8836-110132c8467c",
+    "Host": "10.180.4.157",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "3313"
+}
+Content-Type: application/json
+Raw Request Body: 
+{  
+    "user": {
+    "employee_id": "345412",
+    "role": "employee"
+    },
+    "parentWorkflowId":"Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+        "position": "1",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["submit", "cancel"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "",
+        "resumeStepPosition": "",
+        "nextStepPosition":"2",
+        "prevStepPosition":""
+        },
+        {
+        "position": "2",
+        "step_user_role": "fla",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "2",
+        "nextStepPosition":"3",
+        "prevStepPosition":"1"
+        },
+        {
+        "position": "3",
+        "step_user_role": "mmg",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "3",
+        "nextStepPosition":"4",
+        "prevStepPosition":"2"
+        },
+         {
+        "position": "4",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "4",
+        "nextStepPosition":"5",
+        "prevStepPosition":"3"
+        },
+         {
+        "position": "5",
+        "step_user_role": "group_head",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "5",
+        "nextStepPosition":"6",
+        "prevStepPosition":"4"
+        },
+         {
+        "position": "6",
+        "step_user_role": "finance_admin",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "6",
+        "nextStepPosition":"7",
+        "prevStepPosition":"5"
+        },
+         {
+        "position": "7",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "7",
+        "nextStepPosition":"8",
+        "prevStepPosition":"6"
+        },
+         {
+        "position": "8",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "8",
+        "nextStepPosition":"",
+        "prevStepPosition":"7"
+        }
+
+    ]
+}
+
+Processed Input: {
+    "user": {
+        "employee_id": "345412",
+        "role": "employee"
+    },
+    "parentWorkflowId": "Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+            "position": "1",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "submit",
+                "cancel"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "",
+            "resumeStepPosition": "",
+            "nextStepPosition": "2",
+            "prevStepPosition": ""
+        },
+        {
+            "position": "2",
+            "step_user_role": "fla",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "2",
+            "nextStepPosition": "3",
+            "prevStepPosition": "1"
+        },
+        {
+            "position": "3",
+            "step_user_role": "mmg",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "3",
+            "nextStepPosition": "4",
+            "prevStepPosition": "2"
+        },
+        {
+            "position": "4",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "4",
+            "nextStepPosition": "5",
+            "prevStepPosition": "3"
+        },
+        {
+            "position": "5",
+            "step_user_role": "group_head",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "5",
+            "nextStepPosition": "6",
+            "prevStepPosition": "4"
+        },
+        {
+            "position": "6",
+            "step_user_role": "finance_admin",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "6",
+            "nextStepPosition": "7",
+            "prevStepPosition": "5"
+        },
+        {
+            "position": "7",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "7",
+            "nextStepPosition": "8",
+            "prevStepPosition": "6"
+        },
+        {
+            "position": "8",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "8",
+            "nextStepPosition": "",
+            "prevStepPosition": "7"
+        }
+    ]
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:42:52] API REQUEST
+IP: 10.180.6.66
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow/create
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "5acbea4e-893c-415b-86a5-1591a913cea4",
+    "Host": "10.180.4.157",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "3313"
+}
+Content-Type: application/json
+Raw Request Body: 
+{  
+    "user": {
+    "employee_id": "345412",
+    "role": "employee"
+    },
+    "parentWorkflowId":"Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+        "position": "1",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["submit", "cancel"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "",
+        "resumeStepPosition": "",
+        "nextStepPosition":"2",
+        "prevStepPosition":""
+        },
+        {
+        "position": "2",
+        "step_user_role": "fla",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "2",
+        "nextStepPosition":"3",
+        "prevStepPosition":"1"
+        },
+        {
+        "position": "3",
+        "step_user_role": "mmg",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "3",
+        "nextStepPosition":"4",
+        "prevStepPosition":"2"
+        },
+         {
+        "position": "4",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "4",
+        "nextStepPosition":"5",
+        "prevStepPosition":"3"
+        },
+         {
+        "position": "5",
+        "step_user_role": "group_head",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "5",
+        "nextStepPosition":"6",
+        "prevStepPosition":"4"
+        },
+         {
+        "position": "6",
+        "step_user_role": "finance_admin",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "6",
+        "nextStepPosition":"7",
+        "prevStepPosition":"5"
+        },
+         {
+        "position": "7",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "7",
+        "nextStepPosition":"8",
+        "prevStepPosition":"6"
+        },
+         {
+        "position": "8",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "8",
+        "nextStepPosition":"",
+        "prevStepPosition":"7"
+        }
+
+    ]
+}
+
+Processed Input: {
+    "user": {
+        "employee_id": "345412",
+        "role": "employee"
+    },
+    "parentWorkflowId": "Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+            "position": "1",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "submit",
+                "cancel"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "",
+            "resumeStepPosition": "",
+            "nextStepPosition": "2",
+            "prevStepPosition": ""
+        },
+        {
+            "position": "2",
+            "step_user_role": "fla",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "2",
+            "nextStepPosition": "3",
+            "prevStepPosition": "1"
+        },
+        {
+            "position": "3",
+            "step_user_role": "mmg",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "3",
+            "nextStepPosition": "4",
+            "prevStepPosition": "2"
+        },
+        {
+            "position": "4",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "4",
+            "nextStepPosition": "5",
+            "prevStepPosition": "3"
+        },
+        {
+            "position": "5",
+            "step_user_role": "group_head",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "5",
+            "nextStepPosition": "6",
+            "prevStepPosition": "4"
+        },
+        {
+            "position": "6",
+            "step_user_role": "finance_admin",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "6",
+            "nextStepPosition": "7",
+            "prevStepPosition": "5"
+        },
+        {
+            "position": "7",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "7",
+            "nextStepPosition": "8",
+            "prevStepPosition": "6"
+        },
+        {
+            "position": "8",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "8",
+            "nextStepPosition": "",
+            "prevStepPosition": "7"
+        }
+    ]
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:51:25] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "adeebac7-0753-497f-906b-40bcae946d0e",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "291"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+====================================================================================================
+
+====================================================================================================
+[2025-05-30 11:58:47] API REQUEST
+IP: 127.0.0.1
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow-instance/getAllByApproverRole
+User ID: 566565
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "19796419-059a-4c37-8a0a-a0a685d1969e",
+    "Host": "localhost:80",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "291"
+}
+Content-Type: application/json
+Raw Request Body: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+Processed Input: {
+    "workflow_id": "Wf_440",
+    "user": {
+        "employee_id": "566565",
+        "employee_email": "harswagh@cdac.in",
+        "sla": "101035",
+        "employee_name": "Harshvardhan Wagh",
+        "designation": "PA",
+        "fla": "201025",
+        "role": "owner"
+    }
+}
+====================================================================================================

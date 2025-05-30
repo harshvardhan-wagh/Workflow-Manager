@@ -80,13 +80,15 @@ class WorkflowService
         // Step 2: Versioning logic
         $registered = $this->initializeVersioning($workflow);
         if (!$registered) {
-            return ['status' => 'error', 'message' => 'Workflow versioning failed.'];
+            // return ['status' => 'error', 'message' => 'Workflow versioning failed.'];
+            return false; // Early return if versioning fails
         }
 
         // Step 3: Save to DB
         $saved = $this->saveWorkflow($workflow);
         if (!$saved) {
-            return ['status' => 'error', 'message' => 'Failed to save workflow.'];
+            // return ['status' => 'error', 'message' => 'Failed to save workflow.'];
+            return false; // Early return if saving fails
         }
 
         return [

@@ -22,13 +22,13 @@ class WorkflowRoutes
                 $workflowService = new WorkflowService($registryService);
                 $controller = new WorkflowController($workflowService);
                 $workflow = $controller->createWorkflow($input);
-
-                Response::json([
-                    'status' => 'success',
-                    'workflow' => $workflow
-                ]);
+                if (!$workflow) {
+                    Response::error('Workflow creation failed.', [], 400);
+                }
+                Response::success('Workflow created successfully.', $workflow, 200);
             } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                // Response::error($e->getMessage(), 400);
+                Response::error('Failed to create workflow: ' . $e->getMessage(), [], 400);
             }
 
             return true; // route matched
@@ -46,13 +46,13 @@ class WorkflowRoutes
                 $workflowService = new WorkflowService($registryService);
                 $controller = new WorkflowController($workflowService);
                 $workflows = $controller->getAllWorkflows();
-
-                Response::json([
-                    'status' => 'success',
-                    'workflows' => $workflows
-                ]);
+                if (!$workflows) {
+                    Response::error('No workflows found.', [], 404);
+                }
+                Response::success('Workflows retrieved successfully.', $workflows, 200);
             } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                // Response::error($e->getMessage(), 400);
+                Response::error('Failed to retrieve workflows: ' . $e->getMessage(), [], 400);
             }
         }
 
@@ -66,18 +66,19 @@ class WorkflowRoutes
                 $controller = new WorkflowController($workflowService);
                 $workflows = $controller->getWorkflow($input);
 
-                Response::json([
-                    'status' => 'success',
-                    'workflows' => $workflows
-                ]);
+                if (!$workflows) {
+                    Response::error('Workflow not found.', [], 404);
+                }
+                Response::success('Workflow retrieved successfully.', $workflows, 200);
             } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                // Response::error($e->getMessage(), 400);
+                Response::error('Failed to retrieve workflow: ' . $e->getMessage(), [], 400);
             }
         }
 
         //Nitesh added : api to get all workflows by parent_id
         if($uri === '/api/workflow/getAllByParentId' && $method === 'GET'){
-            // AuthMiddleware::verify();
+            AuthMiddleware::verify();
 
             $input = Request::input();
             try{
@@ -85,19 +86,19 @@ class WorkflowRoutes
                 $workflowService = new WorkflowService($registryService);
                 $controller = new WorkflowController($workflowService);
                 $workflows = $controller->getWorkflowsByParentId($input);
-
-                Response::json([
-                    'status' => 'success',
-                    'result' => $workflows
-                ]);
+                if (!$workflows) {
+                    Response::error('No workflows found for the given parent ID.', [], 404);
+                }
+                Response::success('Workflows by parent ID retrieved successfully.', $workflows, 200);
             } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                // Response::error($e->getMessage(), 400);
+                Response::error('Failed to retrieve workflows by parent ID: ' . $e->getMessage(), [], 400);
             }
         }
 
         //Nitesh added : api to get latest workflow by parent_id
         if($uri === '/api/workflow/getLatestByParentId' && $method === 'GET'){
-            // AuthMiddleware::verify();
+            AuthMiddleware::verify();
 
             $input = Request::input();
             try{
@@ -106,12 +107,13 @@ class WorkflowRoutes
                 $controller = new WorkflowController($workflowService);
                 $workflows = $controller->getLatestWorkflowByParentId($input);
 
-                Response::json([
-                    'status' => 'success',
-                    'result' => $workflows
-                ]);
+                if (!$workflows) {
+                    Response::error('No latest workflow found for the given parent ID.', [], 404);
+                }
+                Response::success('Latest workflow by parent ID retrieved successfully.', $workflows, 200);
             } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                // Response::error($e->getMessage(), 400);
+                Response::error('Failed to retrieve latest workflow by parent ID: ' . $e->getMessage(), [], 400);
             }
         }
 

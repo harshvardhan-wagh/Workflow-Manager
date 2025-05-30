@@ -530,7 +530,7 @@ class WorkflowInstanceService
             }
 
             return [
-                'status' => 'success',
+                // 'status' => 'success',
                 'workflow_instances' => $workflowInstanceList
             ];
 
@@ -581,7 +581,6 @@ class WorkflowInstanceService
             ];
 
             return [
-                'status' => 'success',
                 'workflow_instance' => $workflowInstance
             ];
 
@@ -605,11 +604,7 @@ class WorkflowInstanceService
             $workflowInstances = $this->workflowInstanceModel->getAllByUserId($employeeId);
             // Edge Case: No data found
             if (empty($workflowInstances)) {
-                return [
-                    'status' => 'success',
-                    'workflow_instances' => [],
-                    'message' => 'No workflow instances found.'
-                ];
+                return false; // No workflow instances found for the user
             }
 
             $workflowInstanceList = [];
@@ -626,17 +621,12 @@ class WorkflowInstanceService
             }
 
             return [
-                'status' => 'success',
                 'workflow_instances' => $workflowInstanceList
             ];
 
         } catch (\Exception $e) {
             error_log("WorkflowService getAllWorkflowInstances failed: " . $e->getMessage());
-            return [
-                'status' => 'error',
-                'message' => 'Failed to retrieve workflow instances.',
-                'error' => $e->getMessage()
-            ];
+            return false; // Indicating failure to retrieve workflow instances
         }
     }
 
@@ -659,11 +649,7 @@ class WorkflowInstanceService
             $workflowInstances = $this->workflowInstanceModel->getAllByUserAndWorkflowId($employeeId, $workflow_id);
             // Edge Case: No data found
             if (empty($workflowInstances)) {
-                return [
-                    'status' => 'success',
-                    'workflow_instances' => [],
-                    'message' => 'No workflow instances found.'
-                ];
+                return false; // No workflow instances found for the user
             }
 
             $workflowInstanceList = [];
@@ -680,17 +666,12 @@ class WorkflowInstanceService
             }
 
             return [
-                'status' => 'success',
                 'workflow_instances' => $workflowInstanceList
             ];
 
         } catch (\Exception $e) {
             error_log("WorkflowService getAllWorkflowInstances failed: " . $e->getMessage());
-            return [
-                'status' => 'error',
-                'message' => 'Failed to retrieve workflow instances.',
-                'error' => $e->getMessage()
-            ];
+            return false; // Indicating failure to retrieve workflow instances
         }
     }
 
@@ -709,11 +690,7 @@ class WorkflowInstanceService
         $response = $this->workflowService->getWorkflowsByParentId($parentWorkflowId);
 
         if ($response['status'] !== 'success' || !isset($response['workflows'])) {
-            return [ 
-                'status' => 'error',
-                'message' => 'Workflows not found or failed to fetch.',
-                'workflow_instances' => [],
-            ]; 
+            return false; // No workflows found for the parent workflow ID
         }
 
         $histories = []; 
@@ -741,7 +718,7 @@ class WorkflowInstanceService
         }
 
         return [
-            'status' => 'success',
+            // 'status' => 'success',
             'workflow_instances' => $histories, 
         ];
     }
@@ -766,11 +743,7 @@ class WorkflowInstanceService
             
             // Step 3: Return early if nothing found
             if (empty($workflowInstanceSteps)) {
-                return [
-                    'status' => 'success',
-                    'workflow_instances' => [],
-                    'message' => 'No workflow instances found.'
-                ];
+                return false; // No workflow instances found for the user
             }
 
             // Step 4: Build workflow instance list
@@ -799,17 +772,12 @@ class WorkflowInstanceService
             }
 
             return [
-                'status' => 'success',
                 'workflow_instances' => $workflowInstanceList
             ];
 
         } catch (\Exception $e) {
             error_log("WorkflowService getWorkflowInstanceByApproverIdRole failed: " . $e->getMessage());
-            return [
-                'status' => 'error',
-                'message' => 'Failed to retrieve workflow instances.',
-                'error' => $e->getMessage()
-            ];
+            return false; // Indicating failure to retrieve workflow instances
         }
     }
 
@@ -832,11 +800,7 @@ class WorkflowInstanceService
             
             // Step 3: Return early if nothing found
             if (empty($workflowInstanceSteps)) {
-                return [
-                    'status' => 'success',
-                    'workflow_instances' => [],
-                    'message' => 'No workflow instances found.'
-                ];
+                return false; // No workflow instances found for the user
             }
 
             // Step 4: Build workflow instance list
@@ -865,17 +829,12 @@ class WorkflowInstanceService
             }
 
             return [
-                'status' => 'success',
                 'workflow_instances' => $workflowInstanceList
             ];
 
         } catch (\Exception $e) {
             error_log("WorkflowService getWorkflowInstanceByApproverRole failed: " . $e->getMessage());
-            return [
-                'status' => 'error',
-                'message' => 'Failed to retrieve workflow instances.',
-                'error' => $e->getMessage()
-            ];
+            return false; // Indicating failure to retrieve workflow instances
         }
     }
 
