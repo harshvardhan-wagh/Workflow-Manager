@@ -1,5 +1,4 @@
 <?php
-
 namespace WorkflowManager\Models;
 
 require_once __DIR__ . '/../Config/db_conn.php';
@@ -8,32 +7,97 @@ use RedBeanPHP\R;
 
 class PermissionModel
 {
-    public static function getPermissionByName($name)
+    public function getAllPermissions()
+    {
+        return R::findAll('permissions');
+    }
+
+    public function getPermissionByName($name)
     {
         return R::findOne('permissions', 'name = ?', [$name]);
     }
 
-    public static function getUserRoleIds($userId)
+    public function getPermissionById($id)
     {
-        return R::getCol('SELECT role_id FROM user_roles WHERE user_id = ?', [$userId]);
+        return R::load('permissions', $id);
     }
 
-    public static function hasUserPermission($userId, $permissionId)
+    public function createPermission($name)
     {
-        return R::findOne('user_permissions', 'user_id = ? AND permission_id = ?', [$userId, $permissionId]);
+        $bean = R::dispense('permissions');
+        $bean->name = $name;
+        return R::store($bean);
     }
 
-    public static function hasRolePermission($roleIds, $permissionId)
+    public function deletePermission($id)
     {
-        if (empty($roleIds)) {
-            return false;
+        $bean = R::load('permissions', $id);
+        if ($bean->id) {
+            R::trash($bean);
+            return true;
+        }
+        return false;
+    }
+
+    public function assignPermissionToUser($user_id, $permission_id)
+    {
+        $bean = R::dispense('user_permissions');
+        $bean->user_id = $user_id;
+        $bean->permission_id = $permission_id;
+        return R::store($bean);
+    }
+
+    public function assignPermissionToRole($role_id, $permission_id)
+    {
+        $bean = R::dispense('role_permissions');
+        $bean->role_id = $role_id;
+        $bean->permission_id = $permission_id;
+        return R::store($bean);
+    }
+
+    public function getUserPermissions($user_id)
+    {
+        return R::getCol('
+            SELECT p.name 
+            FROM permissions p 
+            INNER JOIN user_permissions up ON up.permission_id = p.id 
+            WHERE up.user_id = ?', [$user_id]);
+    }
+
+    public function getRolePermissions($role_id)
+    {
+        return R::getCol('
+            SELECT p.name 
+            FROM permissions p 
+            INNER JOIN role_permissions rp ON rp.permission_id = p.id 
+            WHERE rp.role_id = ?', [$role_id]);
+    }
+
+    public function getUserRoles($user_id)
+    {
+        return R::getCol('
+            SELECT role_id 
+            FROM user_roles 
+            WHERE user_id = ?', [$user_id]);
+    }
+
+    public function userHasPermission($user_id, $permission_name)
+    {
+        // Direct user permissions
+        $userPermissions = $this->getUserPermissions($user_id);
+        if (in_array($permission_name, $userPermissions)) {
+            return true;
         }
 
-        $permCount = R::getCell(
-            'SELECT COUNT(*) FROM role_permissions WHERE permission_id = ? AND role_id IN (' . R::genSlots($roleIds) . ')',
-            array_merge([$permissionId], $roleIds)
-        );
+        // Role-based permissions
+        $roles = $this->getUserRoles($user_id);
+        foreach ($roles as $role_id) {
+            $rolePermissions = $this->getRolePermissions($role_id);
+            if (in_array($permission_name, $rolePermissions)) {
+                return true;
+            }
+        }
 
-        return $permCount > 0;
+        return false;
     }
 }

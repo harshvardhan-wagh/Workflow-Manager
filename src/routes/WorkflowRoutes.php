@@ -4,6 +4,7 @@ namespace WorkflowManager\Routes;
 
 use WorkflowManager\ApiControllers\WorkflowController;
 use WorkflowManager\Services\WorkflowRegistryService;
+use WorkflowManager\Services\PermissionService;
 use WorkflowManager\Services\WorkflowService;
 use WorkflowManager\Helpers\Request;
 use WorkflowManager\Helpers\Response;
@@ -16,6 +17,13 @@ class WorkflowRoutes
         if ($uri === '/api/workflow/create' && $method === 'POST') {
             AuthMiddleware::verify(); 
             $input = Request::input();
+            $user = AuthMiddleware::user($input);
+
+            $permissionService = new PermissionService();
+            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Response::error('Unauthorized: Permission denied', 403);
+                return true;
+            }
 
             try {
                 $registryService = new WorkflowRegistryService();
@@ -31,15 +39,17 @@ class WorkflowRoutes
                 Response::error($e->getMessage(), 400);
             }
 
-            return true; // route matched
+            return true; 
         }
 
-        //TODo Workflow Basic Api
-        //-- Get Workflow By ID
-        //-- Update Workflow By ID (If Needed)
-
         if ($uri === '/api/workflow/getAll' && $method === 'GET') {
-            // AuthMiddleware::verify();
+            
+            AuthMiddleware::verify();
+            $permissionService = new PermissionService();
+            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Response::error('Unauthorized: Permission denied', 403);
+                return true;
+            }
 
             try{
                 $registryService = new WorkflowRegistryService();
@@ -60,6 +70,12 @@ class WorkflowRoutes
             AuthMiddleware::verify();
 
             $input = Request::input();
+            $user = AuthMiddleware::user($input);
+            $permissionService = new PermissionService();
+            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Response::error('Unauthorized: Permission denied', 403);
+                return true;
+            }
             try{
                 $registryService = new WorkflowRegistryService();
                 $workflowService = new WorkflowService($registryService);
@@ -77,9 +93,16 @@ class WorkflowRoutes
 
         //Nitesh added : api to get all workflows by parent_id
         if($uri === '/api/workflow/getAllByParentId' && $method === 'GET'){
-            // AuthMiddleware::verify();
+           
+            AuthMiddleware::verify();
 
             $input = Request::input();
+            $user = AuthMiddleware::user($input);
+            $permissionService = new PermissionService();
+            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Response::error('Unauthorized: Permission denied', 403);
+                return true;
+            }
             try{
                 $registryService = new WorkflowRegistryService();
                 $workflowService = new WorkflowService($registryService);
@@ -97,9 +120,15 @@ class WorkflowRoutes
 
         //Nitesh added : api to get latest workflow by parent_id
         if($uri === '/api/workflow/getLatestByParentId' && $method === 'GET'){
-            // AuthMiddleware::verify();
+            AuthMiddleware::verify();
 
             $input = Request::input();
+            $user = AuthMiddleware::user($input);
+            $permissionService = new PermissionService();
+            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Response::error('Unauthorized: Permission denied', 403);
+                return true;
+            }
             try{
                 $registryService = new WorkflowRegistryService();
                 $workflowService = new WorkflowService($registryService);

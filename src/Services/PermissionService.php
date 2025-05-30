@@ -1,19 +1,32 @@
-<?php
+<?php 
 
 namespace WorkflowManager\Services;
 
+use WorkflowManager\Models\PermissionModel;
+
 class PermissionService
 {
-    public static function hasPermission($userId, $permissionName)
-    {
-        $perm = PermissionModel::getPermissionByName($permissionName);
-        if (!$perm) return false;
+    protected $permissionModel;
 
-        if (PermissionModel::hasUserPermission($userId, $perm->id)) {
+    public function __construct()
+    {
+        $this->permissionModel = new PermissionModel();
+    }
+
+    public function userHasPermission($userId, $permissionName)
+    {
+        // Check user-level permissions
+        if ($this->permissionModel->userHasPermission($userId, $permissionName)) {
             return true;
         }
+        // Check role-level permissions
+        $roles = $this->permissionModel->getUserRoles($userId);
+        foreach ($roles as $roleId) {
+            if ($this->permissionModel->roleHasPermission($roleId, $permissionName)) {
+                return true;
+            }
+        }
 
-        $roles = PermissionModel::getUserRoleIds($userId);
-        return PermissionModel::hasRolePermission($roles, $perm->id);
+        return false;
     }
 }
