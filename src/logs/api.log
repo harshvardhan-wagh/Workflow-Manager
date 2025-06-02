@@ -2360,3 +2360,272 @@ Processed Input: {
     }
 }
 ====================================================================================================
+
+====================================================================================================
+[2025-05-30 12:32:29] API REQUEST
+IP: 10.180.6.66
+Method: POST
+URI: /Workflow-Manager/public/index.php/api/workflow/create
+User ID: 345412
+Headers: {
+    "Content-Type": "application\/json",
+    "Authorization": "Bearer workflow_engine_ssdg",
+    "User-Agent": "PostmanRuntime\/7.44.0",
+    "Accept": "*\/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "3efbf395-59b8-485b-a5ad-135c2b0a97ea",
+    "Host": "10.180.4.157",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "3313"
+}
+Content-Type: application/json
+Raw Request Body: 
+{  
+    "user": {
+    "employee_id": "345412",
+    "role": "employee"
+    },
+    "parentWorkflowId":"Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+        "position": "1",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["submit", "cancel"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "",
+        "resumeStepPosition": "",
+        "nextStepPosition":"2",
+        "prevStepPosition":""
+        },
+        {
+        "position": "2",
+        "step_user_role": "fla",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "2",
+        "nextStepPosition":"3",
+        "prevStepPosition":"1"
+        },
+        {
+        "position": "3",
+        "step_user_role": "mmg",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "3",
+        "nextStepPosition":"4",
+        "prevStepPosition":"2"
+        },
+         {
+        "position": "4",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "4",
+        "nextStepPosition":"5",
+        "prevStepPosition":"3"
+        },
+         {
+        "position": "5",
+        "step_user_role": "group_head",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "true",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "5",
+        "nextStepPosition":"6",
+        "prevStepPosition":"4"
+        },
+         {
+        "position": "6",
+        "step_user_role": "finance_admin",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "false",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "6",
+        "nextStepPosition":"7",
+        "prevStepPosition":"5"
+        },
+         {
+        "position": "7",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "7",
+        "nextStepPosition":"8",
+        "prevStepPosition":"6"
+        },
+         {
+        "position": "8",
+        "step_user_role": "employee",
+        "stepDescription": "",
+        "actions": ["approve", "reject", "revoke"],
+        "requires_user_id": "false",
+        "is_user_id_dynamic": "true",
+        "targetStepPosition": "1",
+        "resumeStepPosition": "8",
+        "nextStepPosition":"",
+        "prevStepPosition":"7"
+        }
+
+    ]
+}
+
+Processed Input: {
+    "user": {
+        "employee_id": "345412",
+        "role": "employee"
+    },
+    "parentWorkflowId": "Wf_466",
+    "workflowName": "Indent",
+    "workflowDescription": " For Indent",
+    "workflow_steps": [
+        {
+            "position": "1",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "submit",
+                "cancel"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "",
+            "resumeStepPosition": "",
+            "nextStepPosition": "2",
+            "prevStepPosition": ""
+        },
+        {
+            "position": "2",
+            "step_user_role": "fla",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "2",
+            "nextStepPosition": "3",
+            "prevStepPosition": "1"
+        },
+        {
+            "position": "3",
+            "step_user_role": "mmg",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "3",
+            "nextStepPosition": "4",
+            "prevStepPosition": "2"
+        },
+        {
+            "position": "4",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "4",
+            "nextStepPosition": "5",
+            "prevStepPosition": "3"
+        },
+        {
+            "position": "5",
+            "step_user_role": "group_head",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "true",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "5",
+            "nextStepPosition": "6",
+            "prevStepPosition": "4"
+        },
+        {
+            "position": "6",
+            "step_user_role": "finance_admin",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "false",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "6",
+            "nextStepPosition": "7",
+            "prevStepPosition": "5"
+        },
+        {
+            "position": "7",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "7",
+            "nextStepPosition": "8",
+            "prevStepPosition": "6"
+        },
+        {
+            "position": "8",
+            "step_user_role": "employee",
+            "stepDescription": "",
+            "actions": [
+                "approve",
+                "reject",
+                "revoke"
+            ],
+            "requires_user_id": "false",
+            "is_user_id_dynamic": "true",
+            "targetStepPosition": "1",
+            "resumeStepPosition": "8",
+            "nextStepPosition": "",
+            "prevStepPosition": "7"
+        }
+    ]
+}
+====================================================================================================
