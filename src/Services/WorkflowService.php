@@ -160,8 +160,6 @@ class WorkflowService
         $workflow = $this->createWorkflowEntity($workflowData, $workflowBean['workflow_id_']);
 
         $this->addStepsToWorkflowEntity($workflow, $stepsData);
-        
-        // var_dump($workflow);
 
         return $workflow;
     }
@@ -248,7 +246,7 @@ class WorkflowService
     
     
 
-    public function initializeVersioning(Workflow $workflow): bool
+    public function initializeVersioning(Workflow $workflow)
     {
         if (empty($workflow->parent_workflow_id_)) {
             $workflow->workflow_version = 1;

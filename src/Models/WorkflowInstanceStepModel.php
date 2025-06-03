@@ -29,28 +29,40 @@ class WorkflowInstanceStepModel
         $bean->workflow_instance_step_description = $WorkflowInstanceStep->Instance_step_description ?? null;
         
         // var_dump("saving bean :", $bean);
-        return R::store($bean);
+        $id =  R::store($bean);
+
+        if (!$id) {
+            throw new \RuntimeException("Failed to insert workflow instance step for workflow_instance_id: {$WorkflowInstanceStep->workflow_instance_id_}");
+        }
+        return $id;
     }
     
 
-    public function get($id) {
+    public function get($id) 
+    {
         $WorkflowInstanceStep = R::findOne($this->tableName, 'WorkflowInstance_step_id = ?', [$id]);
         return $WorkflowInstanceStep;
     }
 
-    public function getWorkflowInstanceSteps($Workflow_instance_id_){
+    public function getWorkflowInstanceSteps($Workflow_instance_id_)
+    {
         $instanceSteps = R::findAll('workflowinstancestep','workflow_instance_id_ = ?',[$Workflow_instance_id_],'ORDER BY step_position');
+        if (!$instanceSteps) {
+            throw new \RuntimeException("No steps found for workflow_instance_id: $Workflow_instance_id_");
+        }
         return $instanceSteps;
     }
 
     
 
-    public function getAllStepsByInstanceId($Workflow_instance_id_){
+    public function getAllStepsByInstanceId($Workflow_instance_id_)
+    {
         $instanceSteps = R::findAll('workflowinstancestep','workflow_instance_id_ = ?',[$Workflow_instance_id_],'ORDER BY step_position');
         return $instanceSteps;
     }
 
-    public function update($WorkflowInstanceStep) {
+    public function update($WorkflowInstanceStep) 
+    {
         $bean = R::findOne($this->tableName, 'WorkflowInstance_step_id = ?', [$WorkflowInstanceStep->WorkflowInstance_step_id]);
         if(is_null($bean)) {
             return;
@@ -82,12 +94,13 @@ class WorkflowInstanceStepModel
         }
     }
 
-    public function updateStepUserId($workflow_instance_step_id_, $workflow_instance_step_user_id) {
+    public function updateStepUserId($workflow_instance_step_id_, $workflow_instance_step_user_id) 
+    {
 
         $bean = R::findOne('workflowinstancestep', 'workflow_instance_step_id_ = ?', [$workflow_instance_step_id_]);
 
-        if(is_null($bean)) {
-            return;
+        if (is_null($bean)) {
+            throw new \RuntimeException("Step not found for ID: $workflow_instance_step_id_");
         }
 
         $isModified = false;
@@ -99,33 +112,42 @@ class WorkflowInstanceStepModel
             $isModified = true;
         }
         if ($isModified) {
-            return R::store($bean);
+            $id = R::store($bean);
+            if (!$id) {
+                throw new \RuntimeException("Failed to update dynamic status for step ID: $workflow_instance_step_id_");
+            }
+            return $id;
         } else {
             return false; 
         }
 
     }
 
-            public function updateStepDynamicStatus($workflow_instance_step_id_, $status) {
-                $bean = R::findOne('workflowinstancestep', 'workflow_instance_step_id_ = ?', [$workflow_instance_step_id_]);
+    public function updateStepDynamicStatus($workflow_instance_step_id_, $status) 
+    {
+        $bean = R::findOne('workflowinstancestep', 'workflow_instance_step_id_ = ?', [$workflow_instance_step_id_]);
 
-                if (is_null($bean)) {
-                    return; // If the step is not found, exit the function
-                }
+        if (is_null($bean)) {
+            throw new \RuntimeException("Step not found for ID: $workflow_instance_step_id_");
+        }
 
-                $isModified = false;
+        $isModified = false;
 
-                if ($bean->is_user_id_dynamic != $status) {
-                    $bean->is_user_id_dynamic = $status; // Update the dynamic status
-                    $isModified = true;
-                }
+        if ($bean->is_user_id_dynamic != $status) {
+            $bean->is_user_id_dynamic = $status; // Update the dynamic status
+            $isModified = true;
+        }
 
-                if ($isModified) {
-                    return R::store($bean); // Save the changes to the database
-                } else {
-                    return false; // No changes were made
-                }
+        if ($isModified) {
+            $id = R::store($bean);
+            if (!$id) {
+                throw new \RuntimeException("Failed to update dynamic status for step ID: $workflow_instance_step_id_");
             }
+            return $id;
+        } else {
+            return false; // No changes were made
+        }
+    }
 
     public function delete($WorkflowInstanceStep) {
         $bean = R::findOne($this->tableName, 'WorkflowInstance_step_id = ?', [$WorkflowInstanceStep->WorkflowInstance_step_id]);

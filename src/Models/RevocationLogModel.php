@@ -28,7 +28,13 @@ class RevocationLogModel {
         $log->remarks = $remarks;
         $log->created_at = R::isoDateTime();
 
-        return R::store($log); // returns inserted ID
+        $id =  R::store($log); // returns inserted ID
+
+        if (!$id) {
+            throw new \RuntimeException("Failed to log revocation for workflow instance ID: $workflowInstanceID");
+        }
+
+        return $id;
     }
 
     /**
@@ -47,6 +53,9 @@ class RevocationLogModel {
 
     public function getInstanceLatestRuleId($workflowInstanceID) {
         $result = R::getCell('SELECT rule_applied_id FROM revokelog WHERE workflow_instance_id = ? ORDER BY created_at DESC LIMIT 1', [$workflowInstanceID]);
+        if(!$result) {
+            throw new \RuntimeException("No revoke log found for workflow instance ID: $workflowInstanceID");
+        }
         return $result;
     }
 }

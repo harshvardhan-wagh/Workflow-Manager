@@ -35,7 +35,7 @@ class WorkflowVersionModel
         $id = R::store($bean);
 
         if (!$id) {
-            throw new RuntimeException("Failed to insert workflow version. RedBean store returned falsy value.");
+            throw new \RuntimeException("Failed to insert workflow version. RedBean store returned falsy value.");
         }
 
         return $id;
@@ -56,7 +56,7 @@ class WorkflowVersionModel
         );
     
         if (!$result) {
-            throw new RuntimeException("No latest version found for parent_workflow_id: $parent_workflow_id");
+            throw new \RuntimeException("No latest version found for parent_workflow_id: $parent_workflow_id");
         }
     
         return $result;
@@ -70,8 +70,8 @@ class WorkflowVersionModel
                 [$parent_workflow_id]
             );
 
-            if (!$latestVersion['workflow_id']) {
-                throw new RuntimeException("No latest version found for parent_workflow_id: $parent_workflow_id");
+            if (!$latestVersion || empty($latestVersion->workflow_id)) {
+                throw new \RuntimeException("No latest version found for parent_workflow_id: $parent_workflow_id");
             }
      
             return $latestVersion['workflow_id'] ;
@@ -171,7 +171,7 @@ class WorkflowVersionModel
 
         if ($updated === 0) {
             R::rollback(); // must rollback before throwing
-            throw new RuntimeException("No rows updated. Possibly invalid workflow_version_id: $new_version_id");
+            throw new \RuntimeException("No rows updated. Possibly invalid workflow_version_id: $new_version_id");
         }
 
         R::commit();

@@ -34,12 +34,6 @@ class WorkflowRoutes
                 $controller       = new WorkflowController($workflowService);
                 $result           = $controller->createWorkflow($input);
         
-                // if your service returns ['status'=>'error', 'message'=>...] you can turn it into an HTTP error
-                if (isset($result['status']) && $result['status'] === 'error') {
-                    Logger::error('Workflow creation failed', ['user'=>$user, 'input'=>$input, 'reason'=>$result['message']]);
-                    Response::error($result['message'], 400);
-                }
-        
                 Response::success([
                     'workflow_id'  => $result['workflow_id'],
                     'version_id'   => $result['version_id'],

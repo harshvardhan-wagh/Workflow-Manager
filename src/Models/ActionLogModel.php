@@ -8,11 +8,12 @@ use RedBeanPHP\R;
 
 class ActionLogModel {
 
-    public function logAction($instanceId, $currentStage, $userId, $actionType, $details, $context = 'instance', $metadata = null) {
+    public function logAction($instanceId, $currentStage, $userId, $role,$actionType, $details, $context = 'instance', $metadata = null) {
         $log = R::dispense('actionlog');
         $log->instanceId    = $instanceId;
         $log->currentStage  = $currentStage;
         $log->userId        = $userId;
+        $log->user_role     = $role;
         $log->actionType    = $actionType;
         $log->details       = $details;
         $log->context       = $context;
@@ -25,7 +26,19 @@ class ActionLogModel {
         }
 
         $log->timestamp = date('Y-m-d H:i:s');
-        return R::store($log);
+        $id =  R::store($log);
+        if (!$id) {
+            throw new \RuntimeException("Failed to log action for instanceId: {$instanceId}");
+        }
+        return $id;
+    }
+
+    public function getApprovedHistoryByRole($parent_workflow_id, $role, $employee_id) {
+        if (empty($parent_workflow_id) || empty($role) || empty($employee_id)) {
+            return [];
+        }
+        return R::findAll('actionlog', ' parent_workflow_id = ? AND user_role = ? AND user_id = ? ORDER BY timestamp DESC', 
+            [$parent_workflow_id, $role, $employee_id]);
     }
 
     public function getLogs($instanceId = null) {

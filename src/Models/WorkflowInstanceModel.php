@@ -14,6 +14,7 @@ class WorkflowInstanceModel{
      
     }
 
+    //Todo : Why we are doing this? Need to change
     public function insert($WorkflowInstance) 
     {
         if (empty($WorkflowInstance->workflow_instance_id_)) {
@@ -36,12 +37,21 @@ class WorkflowInstanceModel{
         $bean->created_by_user_id = $WorkflowInstance->created_by_user_id;
 
   
-        return R::store($bean);
+        $id =  R::store($bean);
+
+        if (!$id) {
+            throw new \RuntimeException("Failed to insert workflow instance for workflow_id: {$WorkflowInstance->workflow_instance_id_}");
+        }
+        return $id;
     }
 
 
     public function getById($workflow_instance_id_) {
-        return R::findOne($this->tableName,'workflow_instance_id_ = ?' ,[$workflow_instance_id_]);
+        $id = R::findOne($this->tableName,'workflow_instance_id_ = ?' ,[$workflow_instance_id_]);
+        if (!$id) {
+            throw new \RuntimeException("No workflow instance found with ID: $workflow_instance_id_");
+        }
+        return $id;
     }
 
     public function getByRoleAndPosition($workflow_instance_id_, $stepPosition) {
@@ -85,16 +95,27 @@ class WorkflowInstanceModel{
         $bean->workflow_instance_description = '';
         $bean->workflow_id_ = $workflow_id_;
         $id = R::store($bean);
+        if (!$id) {
+            throw new \RuntimeException("Failed to create blank workflow instance for workflow_id: $workflow_id_");
+        }
         return $id;
     }
 
     public function saveCurrentStage($workflow_instance_id_, $workflow_instance_stage) {
         $bean = R::findOne($this->tableName, 'workflow_instance_id_ = ?', [$workflow_instance_id_]);
-        if ($bean) {
-            $bean->workflow_instance_stage = $workflow_instance_stage;
-            return R::store($bean);
+       
+        if (!$bean) {
+            throw new \RuntimeException("No workflow instance found with ID: $workflow_instance_id_");
         }
-        return false;
+ 
+        $bean->workflow_instance_stage = $workflow_instance_stage;
+       
+        $id =  R::store($bean);
+        if (!$id) {
+            throw new \RuntimeException("Failed to update workflow instance stage for ID: $workflow_instance_id_");
+        }
+        return $id;
+       
     }
 
 

@@ -39,9 +39,6 @@ class WorkflowRegistryService
         $this->model->insert($workflow);
     
         $this->model->updateLatestVersion($workflow->parent_workflow_id_, $workflow->workflow_version_id_);
-    
-
-        return $insertResponse;
     }
 
     public function getLatestWorkflowVersion(string $parentWorkflowId)

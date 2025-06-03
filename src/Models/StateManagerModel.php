@@ -50,7 +50,13 @@ class StateManagerModel {
         // $state->is_revoke = true;
         $state->updated_at = R::isoDateTime();
 
-        return R::store($state);
+        $id =  R::store($state);
+
+        if (!$id) {
+            throw new \RuntimeException("Failed to store workflow state for instance ID: $workflowInstanceID");
+        }
+
+        return $id;
     
     }
 
@@ -76,16 +82,22 @@ class StateManagerModel {
     public function markAsCompleted($workflowInstanceID) {
         $state = R::findOne($this->tableName, 'workflow_instance_id = ?', [$workflowInstanceID]);
         
-        if ($state) {
-            
-            $state->is_complete = true;
-            $state->updated_at = R::isoDateTime();
-            
-            return R::store($state);
-                
-            var_dump("Marking as completed: " . $workflowInstanceID);
+       if (!$state) {
+            throw new \RuntimeException("No state found for workflow instance ID: $workflowInstanceID");
         }
-        return null;
+            
+        $state->is_complete = true;
+        $state->updated_at = R::isoDateTime();
+        
+        $id = R::store($state);
+
+        if (!$id) {
+            throw new \RuntimeException("Failed to mark workflow instance as completed for ID: $workflowInstanceID");
+        }
+
+        return $id;
+            
+ 
     }
 
     /**
@@ -95,13 +107,18 @@ class StateManagerModel {
     public function markAsRejected($workflowInstanceID) {
         $state = R::findOne($this->tableName, 'workflow_instance_id = ?', [$workflowInstanceID]);
         
-        if ($state) {
-            
-            $state->updated_at = R::isoDateTime();
-            $state->is_halted = true;
-            return R::store($state);
+        if( !$state) {
+            throw new \RuntimeException("No state found for workflow instance ID: $workflowInstanceID");
         }
-        return null;
+            
+        $state->updated_at = R::isoDateTime();
+        $state->is_halted = true;
+        $id =  R::store($state);
+        if (!$id) {
+            throw new \RuntimeException("Failed to mark workflow instance as rejected for ID: $workflowInstanceID");
+        }
+        return $id;
+        
     }
 
     
