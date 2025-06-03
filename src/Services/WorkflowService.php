@@ -74,27 +74,15 @@ class WorkflowService
      */
     public function createWorkflow(array $data)
     {
-        // Step 1: Convert array data to a Workflow Entity object
-        $workflow = $this->buildWorkflowEntityFromArray($data);
+        
+        $wf = $this->buildWorkflowEntityFromArray($data);
 
-        // Step 2: Versioning logic
-        $registered = $this->initializeVersioning($workflow);
-        if (!$registered) {
-            return ['status' => 'error', 'message' => 'Workflow versioning failed.'];
-        }
+        $this->initializeVersioning($wf);
 
-        // Step 3: Save to DB
-        $saved = $this->saveWorkflow($workflow);
-        if (!$saved) {
-            return ['status' => 'error', 'message' => 'Failed to save workflow.'];
-        }
+        $this->saveWorkflow($wf);
+        
 
-        return [
-            'status' => 'success',
-            'workflow_id' => $workflow->workflow_id_,
-            'version_id' => $workflow->workflow_version_id_,
-        ];
-
+        return ['workflow_id'=>$wf->workflow_id_, 'version_id'=>$wf->workflow_version_id_];
     }
 
     public function buildWorkflowEntityFromArray(array $data): Workflow
@@ -275,7 +263,7 @@ class WorkflowService
             $workflow->workflow_version_id_ = $workflow->parent_workflow_id_ . "_v" . $workflow->workflow_version;
         }
 
-        return $this->registry->registerWorkflow($workflow)['success'] ?? false;
+        return $this->registry->registerWorkflow($workflow);
     }
 
     public function addStepToWorkflow(Workflow $workflow, array $stepData): Step
@@ -295,9 +283,8 @@ class WorkflowService
         return $this->workflowModel->createBlankWorkflow();
     }
 
-    public function saveWorkflow(Workflow $workflow): bool
+    public function saveWorkflow(Workflow $workflow)
     {
-        try {
             $this->workflowModel->insert($workflow, $workflow->workflow_id_);
             $step = $workflow->workflow_head_node;
             while ($step !== null) {
@@ -305,12 +292,6 @@ class WorkflowService
                 $this->saveRevokeCondition($step);
                 $step = $step->step_next_step;
             }
-            return true;
-
-        } catch (\Exception $e) {
-            error_log("Failed to save workflow: " . $e->getMessage());
-            return false;
-        }
     }
 
 
@@ -320,34 +301,29 @@ class WorkflowService
     }
 
 
-    public function saveRevokeCondition($step) 
+    public function saveRevokeCondition($step)
     {
         $workflowId = $step->workflow_id_ ?? null;
         $stepId = $step->step_id_ ?? null;
         $revokeConditions = $step->revokeConditions ?? [];
     
         if (empty($workflowId) || empty($stepId)) {
-            error_log("Missing workflow_id or step_id in step object");
-            return;
+            throw new \InvalidArgumentException("Missing workflow_id or step_id in step object");
         }
     
         if (!is_array($revokeConditions)) {
-            error_log("RevokeConditions must be an array. Found: " . gettype($revokeConditions));
-            return;
+            throw new \InvalidArgumentException("RevokeConditions must be an array. Found: " . gettype($revokeConditions));
         }
     
         foreach ($revokeConditions as $index => $revokeCondition) {
             if ($revokeCondition instanceof RevokeCondition) {
-                try {
-                    $this->revokeConditionModel->insert($workflowId, $stepId, $revokeCondition);
-                } catch (\Exception $e) {
-                    error_log("Failed to insert RevokeCondition at index $index for step $stepId: " . $e->getMessage());
-                }
+                $this->revokeConditionModel->insert($workflowId, $stepId, $revokeCondition);
             } else {
-                error_log("Invalid RevokeCondition object at index $index for step $stepId");
+                throw new \UnexpectedValueException("Invalid RevokeCondition object at index $index for step ID: $stepId");
             }
         }
     }
+    
 
     public function getLatestWorkflowVersion(string $parentId): ?Workflow
     {

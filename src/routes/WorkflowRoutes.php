@@ -8,39 +8,61 @@ use WorkflowManager\Services\PermissionService;
 use WorkflowManager\Services\WorkflowService;
 use WorkflowManager\Helpers\Request;
 use WorkflowManager\Helpers\Response;
+use WorkflowManager\Helpers\Logger;
 use WorkflowManager\Middleware\AuthMiddleware;
 
 class WorkflowRoutes
 {
     public static function handle($uri, $method)
     {
+
         if ($uri === '/api/workflow/create' && $method === 'POST') {
-            AuthMiddleware::verify(); 
+            AuthMiddleware::verify();
             $input = Request::input();
-            $user = AuthMiddleware::user($input);
-
-            $permissionService = new PermissionService();
-            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
-                Response::error('Unauthorized: Permission denied', 403);
-                return true;
+            $user  = AuthMiddleware::user($input);
+        
+            // permission check
+            $permSvc = new PermissionService();
+            if (! $permSvc->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Logger::error('Permission denied', ['user'=>$user, 'input'=>$input]);
+                Response::error('You do not have rights to create workflows', 403);
             }
-
+        
             try {
-                $registryService = new WorkflowRegistryService();
-                $workflowService = new WorkflowService($registryService);
-                $controller = new WorkflowController($workflowService);
-                $workflow = $controller->createWorkflow($input);
-
-                Response::json([
-                    'status' => 'success',
-                    'workflow' => $workflow
+                $registryService  = new WorkflowRegistryService();
+                $workflowService  = new WorkflowService($registryService);
+                $controller       = new WorkflowController($workflowService);
+                $result           = $controller->createWorkflow($input);
+        
+                // if your service returns ['status'=>'error', 'message'=>...] you can turn it into an HTTP error
+                if (isset($result['status']) && $result['status'] === 'error') {
+                    Logger::error('Workflow creation failed', ['user'=>$user, 'input'=>$input, 'reason'=>$result['message']]);
+                    Response::error($result['message'], 400);
+                }
+        
+                Response::success([
+                    'workflow_id'  => $result['workflow_id'],
+                    'version_id'   => $result['version_id'],
+                ], 201);
+        
+            } catch (\Throwable $e) {
+                // catch anything unexpected
+                Logger::error('Unhandled exception in createWorkflow', [
+                    'user'      => $user,
+                    'input'     => $input,
+                    'exception' => [
+                        'message' => $e->getMessage(),
+                        'file'    => $e->getFile(),
+                        'line'    => $e->getLine(),
+                        'trace'   => $e->getTraceAsString(),
+                    ],
                 ]);
-            } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                Response::error('An internal error occurred. Please try again later.', 500);
             }
-
-            return true; 
+        
+            return true;
         }
+        
 
         if ($uri === '/api/workflow/getAll' && $method === 'GET') {
             

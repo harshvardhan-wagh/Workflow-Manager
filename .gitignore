@@ -7,8 +7,10 @@ vendor/
 # # Ignore db_conn.php
 # src/Config/db_conn.php
 
-# # Ignore the api.log file
-# src/logs/api.log
+# # Ignore the Log Files
+src/logs/access.log
+src/logs/error.log
+src/logs/requests.log
 
 # Ignore PHPUnit test result cache files
 .phpunit.result.cache

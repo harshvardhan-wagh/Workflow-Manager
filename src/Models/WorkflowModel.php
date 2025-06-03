@@ -8,19 +8,32 @@ use RedBeanPHP\R;
 class WorkflowModel
 {
 
-    public function insert($workflow,$workflow_id_)
-    {    
-       
-        //take the id from the workflow_id_ 
-        $workflowIdNumber = (int) preg_replace('/\D/', '', $workflow->workflow_id_);
-        $bean = R::findOne('workflow', 'id= ?', [$workflowIdNumber]);
-        $bean->workflow_id_ = $workflow->workflow_id_;
-        $bean->workflow_name = $workflow->workflow_name;
-        $bean->workflow_description = $workflow->workflow_description;
-        $bean->workflow_step_len = $workflow->workflow_step_len;
-        $bean->created_by_user_id = $workflow->created_by_user_id;
-        return R::store($bean);
+   public function insert($workflow, $workflow_id_)
+{    
+    // Extract numeric ID from workflow_id_
+    $workflowIdNumber = (int) preg_replace('/\D/', '', $workflow->workflow_id_);
+    
+    $bean = R::findOne('workflow', 'id = ?', [$workflowIdNumber]);
+
+    if (!$bean) {
+        throw new RuntimeException("No existing workflow found with ID: $workflowIdNumber");
     }
+
+    $bean->workflow_id_ = $workflow->workflow_id_;
+    $bean->workflow_name = $workflow->workflow_name;
+    $bean->workflow_description = $workflow->workflow_description;
+    $bean->workflow_step_len = $workflow->workflow_step_len;
+    $bean->created_by_user_id = $workflow->created_by_user_id;
+
+    $id = R::store($bean);
+
+    if (!$id) {
+        throw new RuntimeException("Failed to insert/update workflow for workflow_id: {$workflow->workflow_id_}");
+    }
+
+    return $id;
+}
+
  
 
     public function update($workflow) {
@@ -63,7 +76,13 @@ class WorkflowModel
         $bean->workflow_description = '';
         $bean->workflow_step_len = '0';    //initially set to 0
         $id = R::store($bean);
+
+        if (!$id) {
+            throw new WorkflowPersistenceException("Failed to create blank workflow record");
+        }
         return $id;
+
+
 
     }
     

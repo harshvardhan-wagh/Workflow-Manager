@@ -17,13 +17,10 @@ class WorkflowController
 
     public function createWorkflow(array $data)
     {
-        $result = WorkflowDataValidator::validate($data);
-        if (!$result['status']) {
-            throw new Exception($result['message']);
-        }
+        WorkflowDataValidator::validate($data);
+        $clean = WorkflowDataValidator::normalize($data);
 
-        $data = WorkflowDataValidator::normalize($data);
-        return $this->workflowService->createWorkflow($data);
+        return $this->workflowService->createWorkflow($clean);
     }
     public function getAllWorkflows()
     {

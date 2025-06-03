@@ -36,18 +36,17 @@ class WorkflowRegistryService
         $workflow->workflow_version_id_ = $workflow->parent_workflow_id_ . "_v" . $workflow->workflow_version;
         $workflow->is_latest = true;
 
-        $insertResponse = $this->model->insert($workflow);
-        if ($insertResponse['success']) {
-            $this->model->updateLatestVersion($workflow->parent_workflow_id_, $workflow->workflow_version_id_);
-        }
+        $this->model->insert($workflow);
+    
+        $this->model->updateLatestVersion($workflow->parent_workflow_id_, $workflow->workflow_version_id_);
+    
 
         return $insertResponse;
     }
 
     public function getLatestWorkflowVersion(string $parentWorkflowId)
     {
-        $data = $this->model->getLatestVersion($parentWorkflowId);
-        return $data ;
+        return $this->model->getLatestVersion($parentWorkflowId);
     }
 
 
