@@ -246,7 +246,7 @@ class WorkflowService
     
     
 
-    public function initializeVersioning(Workflow $workflow): bool
+    public function initializeVersioning(Workflow $workflow)
     {
         if (empty($workflow->parent_workflow_id_)) {
             $workflow->workflow_version = 1;

@@ -175,9 +175,9 @@ class WorkflowInstanceService
                 $workflowInstance->workflow_instance_id_,
                 $stepBean->workflow_step_id_,
                 $workflowInstance->workflow_instance_id_ . '-' . $stepBean->workflow_step_id_,
-                $stepBean->step_position,
+                $stepBean->workflow_instance_step_position,
                 $stepBean->is_user_id_dynamic,
-                $stepBean->step_user_role,
+                $stepBean->workflow_instance_step_user_role,
                 $stepBean->workflow_instance_step_user_id,
                 $stepBean->workflow_instance_step_description,
             );
@@ -343,15 +343,41 @@ class WorkflowInstanceService
 
     //?====================================== Workflow Instance Process Action ===================================
    
+    public function verifyUserHasPermission(array $user, WorkflowInstance $workflowInstance)
+    {
+        $currentStep = $workflowInstance->getCurrentStep();
+    
+        // Case 1: Role-based check
+        if ($currentStep->workflow_instance_step_user_id === $currentStep->workflow_instance_step_user_role) {
+            if ($currentStep->workflow_instance_step_user_role !== $user['role']) {
+                return false;
+            }
+        } else {
+            // Case 2: User ID based check
+            if ($currentStep->workflow_instance_step_user_id !== $user['employee_id']) {
+                return false;
+            }
+        }
+
+        return true;     
+    }
+    
+
     public function workflowInstanceProcessAction(array $data, $context)
     {
         $workflowInstance = $this->createWorkflowInstanceFromDB($data['workflow_instance_id']);
+        // print_r("Workflow Instance Details: ");
+        // var_dump($workflowInstance);
         $action = $data['action'] ?? null;
         $nextStepEmployeeId = $data['nextStepEmployeeId'] ?? null;
 
         $currentStage = $workflowInstance->workflow_instance_stage;
 
-        // Future: $this->verifyUserHasPermission($data['user'], $workflowInstance);
+        $userHasPermission = $this->verifyUserHasPermission($data['user'], $workflowInstance);
+
+        if (!$userHasPermission) {
+            return $this->processActionErrorResponse('User does not have permission to perform this action.');
+        }
 
         if ($this->stateManagerModel->getCurrentHaltState($workflowInstance->workflow_instance_id_)) {
             return $this->processActionErrorResponse('Current workflow instance is halted.');
@@ -367,10 +393,6 @@ class WorkflowInstanceService
             'revoke'  => $this->processRevokeAction($workflowInstance, $data['user']),
             default   => $this->processActionErrorResponse('Invalid action provided.'),
         };
-
-        if ($response['status'] === 'error') {
-            return $response;
-        }
 
         $this->saveWorkflowInstanceState($workflowInstance);
 
@@ -467,7 +489,6 @@ class WorkflowInstanceService
     private function processActionSuccessResponse($message, $workflowInstance = null)
     {
         return [
-            'status' => 'success',
             'message' => $message,
             'workflow_id' => $workflowInstance?->workflow->workflow_id_ ?? null,
             'workflow_instance_id' => $workflowInstance?->workflow_instance_id_ ?? null,
@@ -478,7 +499,6 @@ class WorkflowInstanceService
     private function processActionErrorResponse($message)
     {
         return [
-            'status' => 'error',
             'message' => $message
         ];
     }
@@ -864,6 +884,64 @@ class WorkflowInstanceService
             ];
         }
     }
+
+      /**
+     * Nitesh added: Get all workflow instances history approved by approver by user role from the database.
+     *
+     * @param string $workflow_id
+     * @param string $role
+     * @param string  $employee_id
+     * @return array
+     */
+    public function getApprovedHistoryByRole(string $parent_workflow_id, string $role, $employee_id): array
+    {
+        try {
+            // Get action logs for the given role and employee and parent workflow ID
+            $actionLogs = $this->actionLogModel->getApprovedHistoryByRole($parent_workflow_id, $role, $employee_id);
+
+            // if (empty($actionLogs)) {
+            //     return false; // No workflows found for the parent workflow ID
+            // }
+
+            $workflowInstanceList = [];
+
+            foreach ($actionLogs as $actionLog) {
+                $instance_id = $actionLog['instance_id'] ?? null;
+
+                if (!$instance_id) {
+                    continue; // Defensive: skip if ID is missing
+                }
+
+                // Fetch the workflow instance bean by ID
+                $workflowInstanceBean = $this->workflowInstanceModel->getById($instance_id);
+
+                if (!$workflowInstanceBean) {
+                    continue; // Defensive: skip if ID is missing
+                }
+                // Build the workflow instance list for history
+                $workflowInstanceList[] = [
+                    'workflow_instance_id'         => $workflowInstanceBean['workflow_instance_id_'],
+                    'workflow_instance_name'       => $workflowInstanceBean['workflow_instance_name'] ?? '',
+                    'workflow_id'                  => $workflowInstanceBean['workflow_id_'],
+                    'workflow_instance_description'=> $workflowInstanceBean['workflow_instance_description'] ?? '',
+                    'created_by_user_id'           => $workflowInstanceBean['created_by_user_id'],
+                    'action'                    => $actionLog['action_type'] ?? '',
+                    'action_timestamp'          => $actionLog['timestamp'] ?? '',
+                ];
+
+            }
+
+            return [
+                'action_history' => $workflowInstanceList
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getWorkflowInstanceByApproverRole failed: " . $e->getMessage());
+            return false; // Indicating failure to retrieve workflow instances
+        }
+    }
+
+
 
 
 }

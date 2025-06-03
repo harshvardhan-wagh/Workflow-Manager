@@ -13,7 +13,7 @@ class ActionLogModel {
         $log->instanceId    = $instanceId;
         $log->currentStage  = $currentStage;
         $log->userId        = $userId;
-        $log->role          = $role;
+        $log->user_role     = $role;
         $log->actionType    = $actionType;
         $log->details       = $details;
         $log->context       = $context;
@@ -31,6 +31,14 @@ class ActionLogModel {
             throw new \RuntimeException("Failed to log action for instanceId: {$instanceId}");
         }
         return $id;
+    }
+
+    public function getApprovedHistoryByRole($parent_workflow_id, $role, $employee_id) {
+        if (empty($parent_workflow_id) || empty($role) || empty($employee_id)) {
+            return [];
+        }
+        return R::findAll('actionlog', ' parent_workflow_id = ? AND user_role = ? AND user_id = ? ORDER BY timestamp DESC', 
+            [$parent_workflow_id, $role, $employee_id]);
     }
 
     public function getLogs($instanceId = null) {
