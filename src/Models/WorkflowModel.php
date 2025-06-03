@@ -16,7 +16,7 @@ class WorkflowModel
     $bean = R::findOne('workflow', 'id = ?', [$workflowIdNumber]);
 
     if (!$bean) {
-        throw new RuntimeException("No existing workflow found with ID: $workflowIdNumber");
+        throw new \RuntimeException("No existing workflow found with ID: $workflowIdNumber");
     }
 
     $bean->workflow_id_ = $workflow->workflow_id_;
@@ -28,7 +28,7 @@ class WorkflowModel
     $id = R::store($bean);
 
     if (!$id) {
-        throw new RuntimeException("Failed to insert/update workflow for workflow_id: {$workflow->workflow_id_}");
+        throw new \RuntimeException("Failed to insert/update workflow for workflow_id: {$workflow->workflow_id_}");
     }
 
     return $id;
@@ -99,9 +99,13 @@ class WorkflowModel
 
     public function getWorkflow($workflow_id_)
     {
-    
-        return R::findone('workflow','workflow_id_ = ?',[$workflow_id_]);
+        $workflow = R::findOne('workflow', 'workflow_id_ = ?', [$workflow_id_]);
 
+        if (!$workflow) {
+            throw new \RuntimeException("Workflow not found for ID: $workflow_id_");
+        }
+
+        return $workflow;
     }
 
     public function getAll()

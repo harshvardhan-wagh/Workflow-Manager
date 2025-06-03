@@ -160,8 +160,6 @@ class WorkflowService
         $workflow = $this->createWorkflowEntity($workflowData, $workflowBean['workflow_id_']);
 
         $this->addStepsToWorkflowEntity($workflow, $stepsData);
-        
-        // var_dump($workflow);
 
         return $workflow;
     }

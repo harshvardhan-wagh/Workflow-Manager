@@ -53,43 +53,28 @@ class WorkflowInstanceService
        
         // Workflow Instance Creation Final
         $workflowInstance = $this->BuildWorkflowInstance($workflow, $data);
-       
-        // var_dump("workflow Instance : ",$workflowInstance);
+        
         // Saving Workflow Instance
-        $saved = $this->saveWorkflowInstance($workflowInstance);
-
-        if (!$saved) {
-            return ['status' => 'error', 'message' => 'Failed to save workflow Instance.'];
-        }
+        $this->saveWorkflowInstance($workflowInstance);
 
         return [
-            'status' => 'success',
+            'Workflow_id' => $workflow->workflow_id_,
             'workflow_instance_id' => $workflowInstance->workflow_instance_id_,
             'workflow_instance_name' => $workflowInstance->workflow_instance_name,
-            'Workflow_id' => $workflow->workflow_id_,
         ];
         
     }
 
-    public function saveWorkflowInstance(WorkflowInstance $workflowInstance): bool
+    public function saveWorkflowInstance(WorkflowInstance $workflowInstance)
     {
-        try{
 
-            $result = $this->workflowInstanceModel->insert($workflowInstance);
+        $result = $this->workflowInstanceModel->insert($workflowInstance);
 
-            $current = $workflowInstance->workflow_instance_steps_head_node;
+        $current = $workflowInstance->workflow_instance_steps_head_node;
 
-            while($current !== null) {
-                // var_dump("Saving Workflow Instance Step: ", $current->workflow_instance_step_id_);
-                $this->workflowInstanceStepModel->insert($current);
-                $current = $current->workflow_instance_next_step;
-            }
-
-            return true;
-
-        } catch (\Exception $e) {
-            error_log("Failed to save workflow: " . $e->getMessage());
-            return false;
+        while($current !== null) {
+            $this->workflowInstanceStepModel->insert($current);
+            $current = $current->workflow_instance_next_step;
         }
         
     }
@@ -395,6 +380,7 @@ class WorkflowInstanceService
             $workflowInstance->workflow_instance_id_,
             $currentStage,
             $data['user']['employee_id'],
+            $data['user']['role'],
             $data['action'],
             $details = null ,
             $context,

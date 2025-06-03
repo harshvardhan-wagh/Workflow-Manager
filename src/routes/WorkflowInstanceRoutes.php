@@ -8,6 +8,7 @@ use WorkflowManager\Services\WorkflowRegistryService;
 use WorkflowManager\Services\WorkflowInstanceService;
 use WorkflowManager\Helpers\Request;
 use WorkflowManager\Helpers\Response;
+use WorkflowManager\Helpers\Logger;
 use WorkflowManager\Middleware\AuthMiddleware;
 
 class WorkflowInstanceRoutes
@@ -15,28 +16,54 @@ class WorkflowInstanceRoutes
     public static function handle($uri, $method)
     {
         $input = Request::input();
+        $user  = AuthMiddleware::user($input);
         $registryService = new WorkflowRegistryService();
         $workflowService = new WorkflowService($registryService);
         $workflowInstanceService = new WorkflowInstanceService($workflowService);
         $controller = new WorkflowInstanceController($workflowInstanceService);
 
         if ($uri === '/api/workflow-instance/create' && $method === 'POST') {
+
+            AuthMiddleware::verify();
             try {
                 $workflow = $controller->createWorkflowInstance($input);
-                Response::json(['status' => 'success', 'workflow' => $workflow]);
-            } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                Response::success(['workflow' => $workflow]);
+            } catch (\Throwable $e) {
+                // catch anything unexpected
+                Logger::error('Unhandled exception in create Workflow Instance', [
+                    'user'      => $user,
+                    'input'     => $input,
+                    'exception' => [
+                        'message' => $e->getMessage(),
+                        'file'    => $e->getFile(),
+                        'line'    => $e->getLine(),
+                        'trace'   => $e->getTraceAsString(),
+                    ],
+                ]);
+                Response::error('An internal error occurred. Please try again later.', 500);
             }
 
             return true;
         }
 
+
         if ($uri === '/api/workflow-instance/action' && $method === 'POST') {
             try {
                 $result = $controller->workflowInstanceProcessAction($input);
-                Response::json(['status' => 'success', 'result' => $result]);
-            } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                Response::success(['result' => $result]);
+            } catch (\Throwable $e) {
+                // catch anything unexpected
+                Logger::error('Unhandled exception in create Workflow Instance', [
+                    'user'      => $user,
+                    'input'     => $input,
+                    'exception' => [
+                        'message' => $e->getMessage(),
+                        'file'    => $e->getFile(),
+                        'line'    => $e->getLine(),
+                        'trace'   => $e->getTraceAsString(),
+                    ],
+                ]);
+                Response::error('An internal error occurred. Please try again later.', 500);
             }
 
             return true;

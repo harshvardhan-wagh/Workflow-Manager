@@ -30,16 +30,23 @@ class WorkflowStepModel {
         $id = R::store($bean);
 
         if (!$id) {
-            throw new RuntimeException("Failed to insert step with step_id: {$step->step_id_}");
+            throw new \RuntimeException("Failed to insert step with step_id: {$step->step_id_}");
         }
 
         return $id;
     }
 
     
-    public function getAllWorkflowSteps($workflow_id_) {
+    public function getAllWorkflowSteps($workflow_id_) 
+    {
         $steps = R::findAll('step', 'workflow_id_ = ?', [$workflow_id_],'ORDER BY step_position');
+        
+        if(!$steps){
+            throw new \RuntimeException("No steps found for workflow_id: $workflow_id_");
+        }
+        
         return $steps;
+
     }
 
     //Nitesh added to get step position by role and workflow id

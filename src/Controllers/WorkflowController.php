@@ -17,10 +17,7 @@ class WorkflowController
 
     public function createWorkflow(array $data)
     {
-        $result = WorkflowDataValidator::validate($data);
-        if (!$result['status']) {
-            throw new Exception($result['message']);
-        }
+       WorkflowDataValidator::validate($data);
 
         $data = WorkflowDataValidator::normalize($data);
       
