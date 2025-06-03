@@ -8,6 +8,7 @@ use WorkflowManager\Services\WorkflowRegistryService;
 use WorkflowManager\Services\WorkflowInstanceService;
 use WorkflowManager\Helpers\Request;
 use WorkflowManager\Helpers\Response;
+use WorkflowManager\Middleware\AuthMiddleware;
 
 class WorkflowInstanceRoutes
 {
@@ -142,7 +143,7 @@ class WorkflowInstanceRoutes
          * HS added : Get workflowInstance by approver role
          */
         if ($uri === '/api/workflow-instance/getAllByApproverRole' && $method === 'POST') {
-            // AuthMiddleware::verify();
+            AuthMiddleware::verify();
             $input = Request::input();
             try {
                 $workflowInstances = $controller->getWorkflowInstanceByApproverRole($input);

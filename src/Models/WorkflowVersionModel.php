@@ -14,39 +14,33 @@ class WorkflowVersionModel
      */
     public function insert($workflow)
     {
-        try {
-            $bean = R::dispense('workflowversions');
-            $bean->workflow_id = $workflow->workflow_id_;
-            $bean->parent_workflow_id = $workflow->parent_workflow_id_;
-            $bean->workflow_version_id = $workflow->workflow_version_id_;
-            $bean->version_of_workflow = $workflow->workflow_version;
-            $bean->workflow_name = $workflow->workflow_name;
-            $bean->workflow_description = $workflow->workflow_description;
-            $bean->created_by_user_id = $workflow->created_by_user_id;
+        $bean = R::dispense('workflowversions');
+        $bean->workflow_id = $workflow->workflow_id_;
+        $bean->parent_workflow_id = $workflow->parent_workflow_id_;
+        $bean->workflow_version_id = $workflow->workflow_version_id_;
+        $bean->version_of_workflow = $workflow->workflow_version;
+        $bean->workflow_name = $workflow->workflow_name;
+        $bean->workflow_description = $workflow->workflow_description;
+        $bean->created_by_user_id = $workflow->created_by_user_id;
 
-            if (is_numeric($workflow->version_timestamp)) {
-                $bean->version_timestamp = date('Y-m-d H:i:s', $workflow->version_timestamp);
-            } else {
-                $bean->version_timestamp = $workflow->version_timestamp;
-            }
-
-            $bean->is_latest = (bool)$workflow->is_latest;
-            $bean->is_active = isset($workflow->is_active) ? (bool)$workflow->is_active : true;
-
-            $id = R::store($bean);
-
-            if (!$id) {
-                error_log("❌ RedBean store returned falsy value");
-                return ['success' => false, 'message' => 'DB insert failed'];
-            }
-
-            return ['success' => true, 'id' => $id];
-
-        } catch (Exception $e) {
-            error_log("❌ WorkflowVersionModel insert failed: " . $e->getMessage() . "\n" . $e->getTraceAsString());
-            return ['success' => false, 'message' => $e->getMessage()];
+        if (is_numeric($workflow->version_timestamp)) {
+            $bean->version_timestamp = date('Y-m-d H:i:s', $workflow->version_timestamp);
+        } else {
+            $bean->version_timestamp = $workflow->version_timestamp;
         }
+
+        $bean->is_latest = (bool)$workflow->is_latest;
+        $bean->is_active = isset($workflow->is_active) ? (bool)$workflow->is_active : true;
+
+        $id = R::store($bean);
+
+        if (!$id) {
+            throw new RuntimeException("Failed to insert workflow version. RedBean store returned falsy value.");
+        }
+
+        return $id;
     }
+
 
 
         /**
@@ -56,31 +50,32 @@ class WorkflowVersionModel
      */
     public function getLatestVersion($parent_workflow_id)
     {
-        // var_dump("getLatestVersion for this ", $parent_workflow_id);
-        try {
-            return R::findOne('workflowversions', 
-                'parent_workflow_id = ? AND is_latest = 1 AND is_active = 1', 
-                [$parent_workflow_id]
-            );
-        } catch (Exception $e) {
-            error_log("WorkflowVersionModel getLatestVersion failed: " . $e->getMessage());
-            return null;
+        $result = R::findOne('workflowversions', 
+            'parent_workflow_id = ? AND is_latest = 1 AND is_active = 1', 
+            [$parent_workflow_id]
+        );
+    
+        if (!$result) {
+            throw new RuntimeException("No latest version found for parent_workflow_id: $parent_workflow_id");
         }
+    
+        return $result;
     }
 
     public function getLatestWorkflowVersionId($parent_workflow_id)
     {
-        try {
+        
             $latestVersion =  R::findOne('workflowversions', 
                 'parent_workflow_id = ? AND is_latest = 1 AND is_active = 1', 
                 [$parent_workflow_id]
             );
+
+            if (!$latestVersion['workflow_id']) {
+                throw new RuntimeException("No latest version found for parent_workflow_id: $parent_workflow_id");
+            }
      
-            return $latestVersion['workflow_id'] ?? null;
-        } catch (Exception $e) {
-            error_log("WorkflowVersionModel getLatestVersion failed: " . $e->getMessage());
-            return null;
-        }
+            return $latestVersion['workflow_id'] ;
+
     }
 
 
@@ -164,28 +159,25 @@ class WorkflowVersionModel
      * @param string $new_version_id
      * @return bool True on success, false on failure
      */
-    public function updateLatestVersion($parent_workflow_id,$new_version_id)
+    public function updateLatestVersion($parent_workflow_id, $new_version_id)
     {
+        R::begin();
 
-        try {
-            R::begin();
-            
-            // Mark all versions of this workflow as not latest
-            R::exec('UPDATE workflowversions SET is_latest = 0 
-                    WHERE parent_workflow_id = ?', [$parent_workflow_id]);
-            
-            // Mark the new version as latest
-            R::exec('UPDATE workflowversions SET is_latest = 1 
-                    WHERE workflow_version_id = ?', [$new_version_id]);
-            
-            R::commit();
-            return true;
-        } catch (Exception $e) {
-            R::rollback();
-            error_log("WorkflowVersionModel updateLatestVersion failed: " . $e->getMessage());
-            return false;
+        // Mark all versions of this workflow as not latest
+        R::exec('UPDATE workflowversions SET is_latest = 0 WHERE parent_workflow_id = ?', [$parent_workflow_id]);
+
+        // Mark the new version as latest
+        $updated = R::exec('UPDATE workflowversions SET is_latest = 1 WHERE workflow_version_id = ?', [$new_version_id]);
+
+        if ($updated === 0) {
+            R::rollback(); // must rollback before throwing
+            throw new RuntimeException("No rows updated. Possibly invalid workflow_version_id: $new_version_id");
         }
+
+        R::commit();
+        return true;
     }
+
 
     /**
      * Get all versions of a parent workflow

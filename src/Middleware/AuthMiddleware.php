@@ -19,4 +19,19 @@ class AuthMiddleware
             exit;
         }
     }
+
+    public static function user(array $input)
+    {
+         // TODO Letter need to check user with session variable that user is logged in or not 
+
+        // Check if the user is provided in the input
+        if (isset($input['user'])) { 
+            return $input['user'];
+        }
+      
+        http_response_code(401);
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'error', 'message' => 'User not authenticated']);
+        exit;
+    }
 }

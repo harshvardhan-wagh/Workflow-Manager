@@ -9,105 +9,173 @@ class ApiRouter
 {
     public function dispatch()
     {
-
         $ip = $this->getClientIp();
-         // Get input directly
         $postData = $_POST;
         $rawData = file_get_contents('php://input');
         $jsonData = json_decode($rawData, true) ?? [];
         $getData = $_GET;
         
-        // Choose which input to use
         $input = !empty($postData) ? $postData : $jsonData;
-        // $input = Request::input();
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
         $scriptName = $_SERVER['SCRIPT_NAME'];
         $normalizedUri = str_replace($scriptName, '', $uri);
 
-        // Enhanced logging with input data
-        $this->logApiRequest($ip, $input['user']['employee_id'] ?? 'unknown', $_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], $input);
+        // Simple access logging
+        $this->logApiAccess($ip, $input['user']['employee_id'] ?? 'unknown', $method, $normalizedUri);
+        
+        // Detailed request logging (only when needed)
+        if ($this->shouldLogDetails($method, $normalizedUri)) {
+            $this->logRequestDetails($ip, $input['user']['employee_id'] ?? 'unknown', $method, $normalizedUri, $input);
+        }
        
         if (WorkflowRoutes::handle($normalizedUri, $method)) return;
         if (WorkflowInstanceRoutes::handle($normalizedUri, $method)) return;
 
-        // Route not found
         Response::error('Route not found', 404);
     }
 
-    // function logApiRequest($ip, $userEmpId, $method, $uri) {
-      
-    //     $time = date('Y-m-d H:i:s');
-    //     $logLine = "[$time] IP: $ip | $method $uri | User: $userEmpId\n";
-    //     file_put_contents(__DIR__ . '/../logs/api.log', $logLine, FILE_APPEND);
-    // }
-
-    function logApiRequest($ip, $userEmpId, $method, $uri, $inputData = null) {
-        // Create logs directory if it doesn't exist
-        $logDir = __DIR__ . '/../logs';
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0755, true);
-        }
-        
+    /**
+     * Simple access log - one line per request
+     */
+    private function logApiAccess($ip, $userEmpId, $method, $uri) {
+        $logDir = $this->ensureLogDirectory();
         $time = date('Y-m-d H:i:s');
-        $logFile = $logDir . '/api.log';
+        $logLine = "[$time] $ip | $userEmpId | $method $uri\n";
+        file_put_contents($logDir . '/access.log', $logLine, FILE_APPEND);
+    }
+
+    /**
+     * Detailed request logging - separate file
+     */
+    private function logRequestDetails($ip, $userEmpId, $method, $uri, $inputData = null) {
+        $logDir = $this->ensureLogDirectory();
+        $time = date('Y-m-d H:i:s');
+        $logFile = $logDir . '/requests.log';
         
-        // Start log entry
-        $logEntry = "\n" . str_repeat('=', 100) . "\n";
-        $logEntry .= "[$time] API REQUEST\n";
-        $logEntry .= "IP: $ip\n";
-        $logEntry .= "Method: $method\n";
-        $logEntry .= "URI: $uri\n";
-        $logEntry .= "User ID: $userEmpId\n";
+        $logEntry = "\n" . str_repeat('-', 50) . "\n";
+        $logEntry .= "[$time] $method $uri\n";
+        $logEntry .= "IP: $ip | User: $userEmpId\n";
         
-        // Log headers
+        // Only log essential headers
+        $essentialHeaders = ['Content-Type', 'Authorization', 'User-Agent'];
         $headers = getallheaders();
-        if ($headers) {
-            $logEntry .= "Headers: " . json_encode($headers, JSON_PRETTY_PRINT) . "\n";
-        }
-        
-        // Log content type
-        $contentType = $_SERVER['CONTENT_TYPE'] ?? 'not set';
-        $logEntry .= "Content-Type: $contentType\n";
-        
-        // Log different types of input data
-        if ($method === 'POST' || $method === 'PUT' || $method === 'PATCH') {
-            // POST form data
-            if (!empty($_POST)) {
-                $logEntry .= "POST Form Data: " . json_encode($_POST, JSON_PRETTY_PRINT) . "\n";
-            }
-            
-            // Raw request body
-            $rawData = file_get_contents('php://input');
-            if (!empty($rawData)) {
-                $logEntry .= "Raw Request Body: " . $rawData . "\n";
-            }
-            
-            // Processed input data
-            if ($inputData !== null && !empty($inputData)) {
-                $logEntry .= "Processed Input: " . json_encode($inputData, JSON_PRETTY_PRINT) . "\n";
+        foreach ($essentialHeaders as $header) {
+            if (isset($headers[$header])) {
+                $logEntry .= "$header: {$headers[$header]}\n";
             }
         }
         
-        // Log GET parameters
-        if (!empty($_GET)) {
-            $logEntry .= "GET Parameters: " . json_encode($_GET, JSON_PRETTY_PRINT) . "\n";
+        // Log input data (sanitized)
+        if ($inputData && !empty($inputData)) {
+            $sanitizedInput = $this->sanitizeLogData($inputData);
+            $logEntry .= "Input: " . json_encode($sanitizedInput, JSON_UNESCAPED_SLASHES) . "\n";
         }
-        
-        $logEntry .= str_repeat('=', 100) . "\n";
         
         file_put_contents($logFile, $logEntry, FILE_APPEND);
     }
 
-    function getClientIp() {
+    /**
+     * Error logging - separate file
+     */
+    public function logError($message, $context = []) {
+        $logDir = $this->ensureLogDirectory();
+        $time = date('Y-m-d H:i:s');
+        $logLine = "[$time] ERROR: $message";
+        if (!empty($context)) {
+            $logLine .= " | Context: " . json_encode($context);
+        }
+        $logLine .= "\n";
+        file_put_contents($logDir . '/errors.log', $logLine, FILE_APPEND);
+    }
+
+    /**
+     * Determine if we should log detailed request info
+     */
+    private function shouldLogDetails($method, $uri) {
+        // Only log details for:
+        // 1. POST/PUT/PATCH requests
+        // 2. Specific endpoints that need monitoring
+        // 3. During development/debugging
+        
+        if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'])) {
+            return true;
+        }
+        
+        // Log details for specific endpoints
+        $detailedEndpoints = ['/api/workflow/create', '/api/workflow/update'];
+        foreach ($detailedEndpoints as $endpoint) {
+            if (strpos($uri, $endpoint) !== false) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Remove sensitive data from logs
+     */
+    private function sanitizeLogData($data) {
+        $sensitiveKeys = ['password', 'token', 'api_key', 'secret', 'auth'];
+        
+        return $this->recursiveSanitize($data, $sensitiveKeys);
+    }
+
+    private function recursiveSanitize($data, $sensitiveKeys) {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                foreach ($sensitiveKeys as $sensitiveKey) {
+                    if (stripos($key, $sensitiveKey) !== false) {
+                        $data[$key] = '[REDACTED]';
+                        continue 2;
+                    }
+                }
+                if (is_array($value)) {
+                    $data[$key] = $this->recursiveSanitize($value, $sensitiveKeys);
+                }
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Ensure log directory exists
+     */
+    private function ensureLogDirectory() {
+        $logDir = __DIR__ . '/../logs';
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0755, true);
+        }
+        return $logDir;
+    }
+
+    /**
+     * Get client IP address
+     */
+    private function getClientIp() {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? 
               $_SERVER['HTTP_X_REAL_IP'] ?? 
               $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     
-        if ($ip === '::1') return '127.0.0.1'; // normalize localhost IPv6
+        if ($ip === '::1') return '127.0.0.1';
     
         return $ip;
     }
-    
-    
+
+    /**
+     * Daily log rotation - call this periodically
+     */
+    public function rotateLogsIfNeeded() {
+        $logDir = $this->ensureLogDirectory();
+        $logFiles = ['access.log', 'requests.log', 'errors.log'];
+        
+        foreach ($logFiles as $logFile) {
+            $filePath = $logDir . '/' . $logFile;
+            if (file_exists($filePath) && filesize($filePath) > 10 * 1024 * 1024) { // 10MB
+                $archiveName = $logDir . '/' . pathinfo($logFile, PATHINFO_FILENAME) . '_' . date('Y-m-d') . '.log';
+                rename($filePath, $archiveName);
+            }
+        }
+    }
 }

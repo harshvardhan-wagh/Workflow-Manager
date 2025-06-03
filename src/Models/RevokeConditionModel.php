@@ -8,29 +8,27 @@ use RedBeanPHP\R;
 class RevokeConditionModel {
    
 
-    public function insert($workflowId, $stepId, $revokeCondition) {
-        try {
-            if (!$revokeCondition instanceof \WorkflowManager\Entities\RevokeCondition) {
-                throw new \InvalidArgumentException("Expected instance of RevokeCondition");
-            }
-    
-            $bean = R::dispense('revokeconditions');
-            $bean->workflow_id_ = $workflowId;
-            $bean->step_id_ = $stepId;
-            $bean->target_step_id = $revokeCondition->getTargetStepId();
-            $bean->resume_step_id = $revokeCondition->getResumeStepId();
-    
-            $id = R::store($bean);
-            if (!$id) {
-                throw new \RuntimeException("RedBean store failed for RevokeCondition");
-            }
-    
-            return $id;
-        } catch (\Exception $e) {
-            error_log("RevokeConditionModel::insert error: " . $e->getMessage());
-            throw $e;
+    public function insert($workflowId, $stepId, $revokeCondition)
+    {
+        if (!$revokeCondition instanceof \WorkflowManager\Entities\RevokeCondition) {
+            throw new \InvalidArgumentException("Expected instance of RevokeCondition");
         }
+    
+        $bean = R::dispense('revokeconditions');
+        $bean->workflow_id_ = $workflowId;
+        $bean->step_id_ = $stepId;
+        $bean->target_step_id = $revokeCondition->getTargetStepId();
+        $bean->resume_step_id = $revokeCondition->getResumeStepId();
+    
+        $id = R::store($bean);
+    
+        if (!$id) {
+            throw new \RuntimeException("Failed to insert RevokeCondition for workflow_id: $workflowId, step_id: $stepId");
+        }
+    
+        return $id;
     }
+    
 
     public function getRevokeConditionIdByStepId($stepId) {
         $result = R::getCell('SELECT id FROM revokeconditions WHERE step_id_ = ?', [$stepId]);
