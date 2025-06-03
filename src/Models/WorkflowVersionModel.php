@@ -224,14 +224,14 @@ class WorkflowVersionModel
     }
 
     /**
-     *Nitesh added: Get all workflow versions by parent_workflow_id 
+     * Nitesh added: Get all workflow versions by parent_workflow_id 
      * @param string $parent_workflow_id
      * @return array
      */
     public function getLatestWorkflowByParentId($parent_workflow_id)
     {
         try {
-            return R::findOne('workflowversions', 
+            return R::findOne('workflowversions',
                 'parent_workflow_id = ? AND is_latest = 1', 
                 [$parent_workflow_id]
             );

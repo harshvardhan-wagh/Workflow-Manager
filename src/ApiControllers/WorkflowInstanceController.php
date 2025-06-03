@@ -143,4 +143,28 @@ class WorkflowInstanceController
 
     }
 
+    /**
+     * Nitesh added : Get History of workflowInstances approved by approver using role
+     */
+    public function getApprovedHistoryByRole(array $data)
+    {
+
+        //! Please make validator class for validation of this API
+        // Don't Check in controller it self make new class
+        $parent_workflow_id =  $data['parent_workflow_id'] ?? null;
+
+        $role = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['role'] ?? null) 
+                    : null;
+
+        // Not need for employee id in this case
+        // But for consistency we are keeping it here
+        $employee_id = isset($data['user']) && is_array($data['user']) 
+                    ? ($data['user']['employee_id'] ?? null) 
+                    : null;
+        
+        return $this->workflowInstanceService->getApprovedHistoryByRole($parent_workflow_id, $role, $employee_id);
+
+    }
+
 }

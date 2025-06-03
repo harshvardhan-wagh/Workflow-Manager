@@ -14,7 +14,6 @@ use WorkflowManager\Models\RevocationLogModel;
 use WorkflowManager\Models\ActionLogModel;
 use WorkflowManager\Models\WorkflowStepModel;
 
-
 class WorkflowInstanceService
 {
     protected $workflowService;
@@ -25,7 +24,6 @@ class WorkflowInstanceService
     private $revocationLogModel;
     private $actionLogModel;
     private $workflowStepModel;
-  
 
     public function __construct(WorkflowService $workflowService)
     {
@@ -395,6 +393,7 @@ class WorkflowInstanceService
             $workflowInstance->workflow_instance_id_,
             $currentStage,
             $data['user']['employee_id'],
+            $data['user']['role'],
             $data['action'],
             $details = null ,
             $context,
@@ -738,6 +737,8 @@ class WorkflowInstanceService
             // Step 1: Get current step position based on role
             $stepPosition = $this->workflowStepModel->getStepPositionByRole($workflow_id, $role);
 
+            //get all version of parent workflow
+            $allWorkflowVersions = $this->wor->getWorkflowsByParentId($workflow_id);
             // Step 2: Get workflow steps for the given role and employee
             $workflowInstanceSteps = $this->workflowInstanceStepModel->getAllWorkflowStepsByIdRole($workflow_id, $role, $employee_id);
             
@@ -799,9 +800,9 @@ class WorkflowInstanceService
             $workflowInstanceSteps = $this->workflowInstanceStepModel->getAllWorkflowStepsByRole($workflow_id, $role);
             
             // Step 3: Return early if nothing found
-            if (empty($workflowInstanceSteps)) {
-                return false; // No workflow instances found for the user
-            }
+            // if (empty($workflowInstanceSteps)) {
+            //     return false; // No workflow instances found for the user
+            // }
 
             // Step 4: Build workflow instance list
             $workflowInstanceList = [];
@@ -830,6 +831,61 @@ class WorkflowInstanceService
 
             return [
                 'workflow_instances' => $workflowInstanceList
+            ];
+
+        } catch (\Exception $e) {
+            error_log("WorkflowService getWorkflowInstanceByApproverRole failed: " . $e->getMessage());
+            return false; // Indicating failure to retrieve workflow instances
+        }
+    }
+    /**
+     * Nitesh added: Get all workflow instances history approved by approver by user role from the database.
+     *
+     * @param string $workflow_id
+     * @param string $role
+     * @param string  $employee_id
+     * @return array
+     */
+    public function getApprovedHistoryByRole(string $parent_workflow_id, string $role, $employee_id): array
+    {
+        try {
+            // Get action logs for the given role and employee and parent workflow ID
+            $actionLogs = $this->actionLogModel->getApprovedHistoryByRole($parent_workflow_id, $role, $employee_id);
+
+            // if (empty($actionLogs)) {
+            //     return false; // No workflows found for the parent workflow ID
+            // }
+
+            $workflowInstanceList = [];
+
+            foreach ($actionLogs as $actionLog) {
+                $instance_id = $actionLog['instance_id'] ?? null;
+
+                if (!$instance_id) {
+                    continue; // Defensive: skip if ID is missing
+                }
+
+                // Fetch the workflow instance bean by ID
+                $workflowInstanceBean = $this->workflowInstanceModel->getById($instance_id);
+
+                if (!$workflowInstanceBean) {
+                    continue; // Defensive: skip if ID is missing
+                }
+                // Build the workflow instance list for history
+                $workflowInstanceList[] = [
+                    'workflow_instance_id'         => $workflowInstanceBean['workflow_instance_id_'],
+                    'workflow_instance_name'       => $workflowInstanceBean['workflow_instance_name'] ?? '',
+                    'workflow_id'                  => $workflowInstanceBean['workflow_id_'],
+                    'workflow_instance_description'=> $workflowInstanceBean['workflow_instance_description'] ?? '',
+                    'created_by_user_id'           => $workflowInstanceBean['created_by_user_id'],
+                    'action'                    => $actionLog['action_type'] ?? '',
+                    'action_timestamp'          => $actionLog['timestamp'] ?? '',
+                ];
+
+            }
+
+            return [
+                'action_history' => $workflowInstanceList
             ];
 
         } catch (\Exception $e) {

@@ -182,6 +182,24 @@ class WorkflowInstanceRoutes
             // return true;
         }
 
+        /**
+         * Nitesh added : Get history of approved workflowInstance by approver role
+         */
+        if ($uri === '/api/workflow-instance/getApprovedHistoryByRole' && $method === 'POST') {
+            AuthMiddleware::verify();
+            $input = Request::input();
+            try {
+                $workflowInstances = $controller->getApprovedHistoryByRole($input);
+                if (!$workflowInstances) {
+                    Response::error('No workflow instances found for the approver role.', [], 404);
+                }
+                Response::success('Workflow instances retrieved successfully.', $workflowInstances, 200);
+            } catch (\Exception $e) {
+                Response::error('Failed to retrieve workflow instances by approver role.', [], 400);
+            }
+
+            // return true;
+        }
         return false;
     }
 }
