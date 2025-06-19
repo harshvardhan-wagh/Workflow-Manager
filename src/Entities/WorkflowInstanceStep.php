@@ -12,6 +12,13 @@ class WorkflowInstanceStep {
     public $workflow_instance_step_user_role;
     public $workflow_instance_step_user_id;    
     public $workflow_instance_step_description;
+    public $requires_multiple_approvals;         // true if approvers > 1
+    public $approval_mode;                  // 'all', 'any', 'n-of-m', 'specific-user'
+    public $execution_mode;                 // 'parallel' or 'sequential'
+    public $approver_count_required;        // for n-of-m
+    public $required_approver_user_id;      // specific-user
+    public $approval_sequence;              // ['user1', 'user2'] for sequential
+    public $parallel_group_id;              // for grouping parallel steps
     public $workflow_instance_next_step = null;
     public $workflow_instance_previous_step = null;
     public $workflow_instance_step_revoke_target = null;  
@@ -27,6 +34,13 @@ class WorkflowInstanceStep {
         $workflow_instance_step_user_role = null,
         $workflow_instance_step_user_id = null,
         $workflow_instance_step_description = "",
+        $requires_multiple_approvals = false,
+        $approval_mode = "",
+        $execution_mode = "",
+        $approver_count_required = null,
+        $required_approver_user_id = null,
+        $approval_sequence = [],
+        $parallel_group_id = null,
         $workflow_instance_next_step = null,
         $workflow_instance_previous_step = null,
         $workflow_instance_step_revoke_target = null
@@ -40,6 +54,13 @@ class WorkflowInstanceStep {
         $this->workflow_instance_step_user_role = $workflow_instance_step_user_role;
         $this->workflow_instance_step_user_id = $workflow_instance_step_user_id;
         $this->workflow_instance_step_description = $workflow_instance_step_description;
+        $this->requires_multiple_approvals = $requires_multiple_approvals; // true if approvers > 1
+        $this->approval_mode = $approval_mode; // 'all', 'any', 'n-of-m', 'specific-user'
+        $this->execution_mode = $execution_mode; // 'parallel' or 'sequential'
+        $this->approver_count_required = $approver_count_required; // for n-of-m
+        $this->required_approver_user_id = $required_approver_user_id; // specific-user
+        $this->approval_sequence = $approval_sequence; // ['user1', 'user2'] for sequential
+        $this->parallel_group_id = $parallel_group_id; // for grouping parallel steps
         $this->workflow_instance_next_step = $workflow_instance_next_step;
         $this->workflow_instance_previous_step = $workflow_instance_previous_step;
         $this->workflow_instance_step_revoke_target = $workflow_instance_step_revoke_target;

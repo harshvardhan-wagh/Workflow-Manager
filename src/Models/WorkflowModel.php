@@ -8,7 +8,7 @@ use RedBeanPHP\R;
 class WorkflowModel
 {
 
-   public function insert($workflow, $workflow_id_)
+   public function insert($workflow, $workflow_id_, $image)
 {    
     // Extract numeric ID from workflow_id_
     $workflowIdNumber = (int) preg_replace('/\D/', '', $workflow->workflow_id_);
@@ -24,6 +24,7 @@ class WorkflowModel
     $bean->workflow_description = $workflow->workflow_description;
     $bean->workflow_step_len = $workflow->workflow_step_len;
     $bean->created_by_user_id = $workflow->created_by_user_id;
+    $bean->image = $image;
 
     $id = R::store($bean);
 

@@ -27,7 +27,12 @@ class WorkflowInstanceStepModel
         $bean->workflow_instance_step_user_role = $WorkflowInstanceStep->workflow_instance_step_user_role ?? null;
         $bean->workflow_instance_step_user_id = is_null($WorkflowInstanceStep->workflow_instance_step_user_id) ? $WorkflowInstanceStep->workflow_instance_step_user_role : $WorkflowInstanceStep->workflow_instance_step_user_id;
         $bean->workflow_instance_step_description = $WorkflowInstanceStep->Instance_step_description ?? null;
-        
+        $bean->requires_multiple_approvals = $WorkflowInstanceStep->requires_multiple_approvals ?? 0; // Default to 0 if not set
+        $bean->approval_mode = $WorkflowInstanceStep->approval_mode ?? ''; // Default to empty string if not set
+        $bean->execution_mode = $WorkflowInstanceStep->execution_mode ?? ''; // Default to empty string if not set
+        $bean->approval_count_required = !empty($WorkflowInstanceStep->approval_count_required) 
+            ? (int)$WorkflowInstanceStep->approval_count_required 
+            : 0; // or some other default value
         // var_dump("saving bean :", $bean);
         $id =  R::store($bean);
 

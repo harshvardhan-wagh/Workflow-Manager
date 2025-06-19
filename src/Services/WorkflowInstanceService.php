@@ -139,6 +139,11 @@ class WorkflowInstanceService
                 $currentStep->step_user_role,
                 $instance_step_user_id,
                 $currentStep->step_description,
+                $currentStep->requires_multiple_approvals,
+                $currentStep->approver_mode,
+                $currentStep->execution_mode,
+                $currentStep->approval_count_required,
+            
             );
     
             foreach ($currentStep->revokeConditions as $condition) {
@@ -370,6 +375,8 @@ class WorkflowInstanceService
         // var_dump($workflowInstance);
         $action = $data['action'] ?? null;
         $nextStepEmployeeId = $data['nextStepEmployeeId'] ?? null;
+        $approverList = $data['approving_users'] ?? null;
+        $specificUserId = $data['specific_user_id'] ?? null;
 
         $currentStage = $workflowInstance->workflow_instance_stage;
 
@@ -388,7 +395,7 @@ class WorkflowInstanceService
         }
 
         $response = match ($action) {
-            'approve' => $this->processApproveAction($workflowInstance, $nextStepEmployeeId),
+            'approve' => $this->processApproveAction($workflowInstance, $nextStepEmployeeId,$approverList, $specificUserId ),
             'reject'  => $this->processRejectAction($workflowInstance),
             'revoke'  => $this->processRevokeAction($workflowInstance, $data['user']),
             default   => $this->processActionErrorResponse('Invalid action provided.'),
@@ -421,18 +428,33 @@ class WorkflowInstanceService
           );
     }
 
-    private function processApproveAction($workflowInstance, $nextStepEmployeeIds)
+    private function processApproveAction($workflowInstance, $nextStepEmployeeIds , $approverList, $specificUserId)
     {
-        $response = $workflowInstance->acceptStep($nextStepEmployeeIds);
+        $response = $workflowInstance->acceptStep($nextStepEmployeeIds, $approverList, $specificUserId);
+        
 
         if ($response['status'] === 'error') return $response;
 
         return match ($response['action']) {
             'assign_dynamic_user' => $this->handleAssignDynamicUser($workflowInstance, $response),
             'moved_to_next_stage', 'resumed' => $this->processActionSuccessResponse('Stage moved/resumed successfully.'),
+            'store_multiple_approvers' =>$this->handleMultipleApprovers($workflowInstance, $response),
             'final_stage_approved' => $this->handleFinalApproval($workflowInstance),
             default => $this->processActionErrorResponse('Unknown result from acceptStep.'),
         };
+    }
+
+    private function handleMultipleApprovers($workflowInstance, $response){
+        $approvers = $response['approver_list'];
+
+        foreach ($approvers as $approverData) {
+                $this->workflowInstanceStepApproverModel->insertApprover($approverData);
+        }
+
+        $workflowInstance->workflow_instance_stage++;
+        
+        return $this->processActionSuccessResponse('Multiple approvers stored and step prepared.');
+
     }
 
     private function handleAssignDynamicUser($workflowInstance, $response)

@@ -34,7 +34,7 @@ class Workflow {
         $this->version_timestamp = time();
     }
 
-    public function addStep($step_id_, $step_user_role, $requires_user_id , $is_user_id_dynamic ,$stepDescription='') {
+    public function addStep($step_id_, $step_user_role, $requires_user_id , $is_user_id_dynamic ,$stepDescription='',$requires_multiple_approvals=0, $approver_mode = "", $execution_mode = "", $approval_count_required = null) {
          
         $step_position = 1;
         if ($this->workflow_head_node !== null) {
@@ -45,7 +45,7 @@ class Workflow {
             }
             $step_position++;
         }
-        $new_step = new WorkflowStep($this->workflow_id_, $step_id_, $step_user_role, $requires_user_id, $is_user_id_dynamic  ,$step_position,$stepDescription);
+        $new_step = new WorkflowStep($this->workflow_id_, $step_id_, $step_user_role, $requires_user_id, $is_user_id_dynamic  ,$step_position,$stepDescription, $requires_multiple_approvals, $approver_mode, $execution_mode, $approval_count_required);
         if ($this->workflow_head_node === null) {
             $this->workflow_head_node = $new_step;
         } else {

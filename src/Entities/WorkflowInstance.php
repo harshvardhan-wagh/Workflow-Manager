@@ -83,6 +83,63 @@ class WorkflowInstance {
                     $employeeIndex++;
                     $nextStep = $nextStep->workflow_instance_next_step;
                 }
+
+                if($nextStep->requires_multiple_approvals == 1) {
+                
+                 // Getting Approver List
+                   $approverList = $approverList ?? [];
+                   $specificUserId = $specificUserId ?? '';
+                   if (empty($approverList)) {
+                        return [
+                            'status' => 'error',
+                            'action' => 'none',
+                            'message' => 'No approvers provided for multiple-approvals step.'
+                        ];
+                    }
+
+                    // Setting Parallel Group id 
+                    $parallelGroupId = uniqid('pg_');
+                    $approvalUserList = [];
+					
+					// Handle specific user case (approval_mode = specific-user)
+                        if ($nextStep->approval_mode == 'specific-user') {
+                            if (!isset($specificUserId)) {
+                                return [
+                                    'status' => 'error',
+                                    'action' => 'none',
+                                    'message' => "Specific user required but not provided for step {$nextStep->workflow_instance_step_id_}."
+                                ];
+                            }
+							$nextStep->required_approver_user_id = $specificUserId;
+                        }
+                   
+                    foreach ($approverList as $index => $approver) {
+                        
+                        // Handle execution_mode = sequential (store order using 'sequence' field)
+                        $approvalUserList[] = [
+                            'workflow_instance_step_id_' => $nextStep->workflow_instance_step_id_,
+                            'workflow_instance_id_'      => $this->workflow_instance_id_,
+                            'approver_user_id'           => $approver['user_id'],
+                            'approver_role'              => $approver['role'] ?? null,
+                            'approval_status'            => 'pending',
+                            'approval_time'              => null,
+                            'is_current'                 => ($nextStep->execution_mode === 'sequential') ? ($index === 0 ? 1 : 0) : 1,
+                            'sequence'                   => ($nextStep->execution_mode === 'sequential') ? $index : null,
+                            'comments'                   => null,
+                            'parallel_group_id'          => $parallelGroupId,
+                        ];
+                    }
+
+                     return [
+                    'status' => 'success',
+                    'action' => 'store_multiple_approvers',
+                    'message' => 'Multiple approvers (parallel/sequential) to be stored.',
+                    'approver_list' => $approvalUserList,
+                    'step_id' => $nextStep->workflow_instance_step_id_
+                ];
+
+
+                }
         
                 if (!empty($dynamicSteps)) {
                     return [

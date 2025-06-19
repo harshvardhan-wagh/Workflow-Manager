@@ -61,10 +61,15 @@ class WorkflowRoutes
         if ($uri === '/api/workflow/getAll' && $method === 'GET') {
             
             AuthMiddleware::verify();
-            $permissionService = new PermissionService();
-            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
-                Response::error('Unauthorized: Permission denied', 403);
-                return true;
+
+            $input = Request::input();
+            $user  = AuthMiddleware::user($input);
+        
+            // permission check
+            $permSvc = new PermissionService();
+            if (! $permSvc->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Logger::error('Permission denied', ['user'=>$user, 'input'=>$input]);
+                Response::error('You do not have rights to create workflows', 403);
             }
 
             try{
@@ -73,24 +78,38 @@ class WorkflowRoutes
                 $controller = new WorkflowController($workflowService);
                 $workflows = $controller->getAllWorkflows();
 
-                Response::json([
-                    'status' => 'success',
+                Response::success([
                     'workflows' => $workflows
+                ], 201);
+            }catch (\Throwable $e) {
+                // catch anything unexpected
+                Logger::error('Unhandled exception in createWorkflow', [
+                    'user'      => $user,
+                    'input'     => $input,
+                    'exception' => [
+                        'message' => $e->getMessage(),
+                        'file'    => $e->getFile(),
+                        'line'    => $e->getLine(),
+                        'trace'   => $e->getTraceAsString(),
+                    ],
                 ]);
-            } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                Response::error('An internal error occurred. Please try again later.', 500);
             }
+        
+            return true;
         }
 
-        if($uri === '/api/workflow/get' && $method === 'GET'){
+        if($uri === '/api/workflow/get' && $method === 'POST'){
             AuthMiddleware::verify();
 
             $input = Request::input();
-            $user = AuthMiddleware::user($input);
-            $permissionService = new PermissionService();
-            if (!$permissionService->userHasPermission($user['employee_id'], 'create_workflow')) {
-                Response::error('Unauthorized: Permission denied', 403);
-                return true;
+            $user  = AuthMiddleware::user($input);
+        
+            // permission check
+            $permSvc = new PermissionService();
+            if (! $permSvc->userHasPermission($user['employee_id'], 'create_workflow')) {
+                Logger::error('Permission denied', ['user'=>$user, 'input'=>$input]);
+                Response::error('You do not have rights to create workflows', 403);
             }
             try{
                 $registryService = new WorkflowRegistryService();
@@ -98,13 +117,27 @@ class WorkflowRoutes
                 $controller = new WorkflowController($workflowService);
                 $workflows = $controller->getWorkflow($input);
 
-                Response::json([
-                    'status' => 'success',
+                Response::success([
                     'workflows' => $workflows
+                ], 201);
+
+
+            } catch (\Throwable $e) {
+                // catch anything unexpected
+                Logger::error('Unhandled exception in createWorkflow', [
+                    'user'      => $user,
+                    'input'     => $input,
+                    'exception' => [
+                        'message' => $e->getMessage(),
+                        'file'    => $e->getFile(),
+                        'line'    => $e->getLine(),
+                        'trace'   => $e->getTraceAsString(),
+                    ],
                 ]);
-            } catch (\Exception $e) {
-                Response::error($e->getMessage(), 400);
+                Response::error('An internal error occurred. Please try again later.', 500);
             }
+        
+            return true;
         }
 
         //Nitesh added : api to get all workflows by parent_id

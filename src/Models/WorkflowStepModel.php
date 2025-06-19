@@ -18,6 +18,12 @@ class WorkflowStepModel {
         $bean->is_user_id_dynamic = $step->is_user_id_dynamic;
         $bean->step_position = $step->step_position;
         $bean->step_description = $step->step_description;
+        $bean->requires_multiple_approvals = $step->requires_multiple_approvals;
+        $bean->approver_mode = $step->approver_mode;    
+        $bean->execution_mode = $step->execution_mode;
+        $bean->approval_count_required = !empty($step->approval_count_required) 
+        ? (int)$step->approval_count_required 
+        : 0; // or some other default value
 
         $bean->step_next_step = is_object($step->step_next_step)
             ? $step->step_next_step->step_id_

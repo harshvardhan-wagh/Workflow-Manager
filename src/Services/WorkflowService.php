@@ -43,6 +43,7 @@ class WorkflowService
             'workflow_id' => $workflowBean['workflow_id_'],
             'workflowName' => $workflowBean['workflow_name'],
             'step_count' => $workflowBean['workflow_step_len'],
+            'image' => $workflowBean['image'],
             'created_by_user_id' => $workflowBean['created_by_user_id'],
         ];
 
@@ -74,12 +75,13 @@ class WorkflowService
      */
     public function createWorkflow(array $data)
     {
-        
+        $image = $data['image'];
+
         $wf = $this->buildWorkflowEntityFromArray($data);
 
         $this->initializeVersioning($wf);
 
-        $this->saveWorkflow($wf);
+        $this->saveWorkflow($wf, $image);
         
 
         return ['workflow_id'=>$wf->workflow_id_, 'version_id'=>$wf->workflow_version_id_];
@@ -120,7 +122,11 @@ class WorkflowService
                 $stepData['step_user_role'],
                 $stepData['requires_user_id'] == "true",
                 $stepData['is_user_id_dynamic'] == "true",
-                $stepData['stepDescription'] ?? ''
+                $stepData['stepDescription'] ?? '',
+                $stepData['requires_multiple_approvals'] == "true",
+                $stepData['approver_mode'] ?? '',
+                $stepData['execution_mode'] ?? '',
+                $stepData['approval_count_required'] ?? 0
             );
     
             $stepPosition = $stepData['position'];
@@ -237,6 +243,10 @@ class WorkflowService
                 'position' => (int) $stepBean['step_position'],
                 'requires_user_id' => (bool) $stepBean['requires_user_id'],
                 'is_user_id_dynamic' => (bool) $stepBean['is_user_id_dynamic'],
+                'requires_multiple_approvals' => (bool) $stepBean['requires_multiple_approvals'],
+                'approver_mode' => $stepBean['approver_mode'] ?? '',
+                'execution_mode' => $stepBean['execution_mode'] ?? '',
+                'approval_count_required' => (int) $stepBean['approval_count_required'],
             
             ];
         }
@@ -272,7 +282,11 @@ class WorkflowService
             $stepData['requires_user_id'],
             $stepData['is_user_id_dynamic'],
             $stepData['stepName'] ?? '',
-            $stepData['stepDescription'] ?? ''
+            $stepData['stepDescription'] ?? '',
+            $stepData['multiple_approver'] ?? false,
+            $stepData['approver_mode'] ?? '',
+            $stepData['execution_mode'] ?? '',
+            $stepData['approval_count_required'] ?? 0
         );
     }
 
@@ -281,9 +295,9 @@ class WorkflowService
         return $this->workflowModel->createBlankWorkflow();
     }
 
-    public function saveWorkflow(Workflow $workflow)
+    public function saveWorkflow(Workflow $workflow , $image)
     {
-            $this->workflowModel->insert($workflow, $workflow->workflow_id_);
+            $this->workflowModel->insert($workflow, $workflow->workflow_id_ , $image);
             $step = $workflow->workflow_head_node;
             while ($step !== null) {
                 $this->saveStep($step);
