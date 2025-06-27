@@ -29,6 +29,7 @@ class ApiRouter
             $this->logRequestDetails($ip, $input['user']['employee_id'] ?? 'unknown', $method, $normalizedUri, $input);
         }
        
+        if (LdapLoginRoutes::handle($normalizedUri, $method)) return;
         if (WorkflowRoutes::handle($normalizedUri, $method)) return;
         if (WorkflowInstanceRoutes::handle($normalizedUri, $method)) return;
 

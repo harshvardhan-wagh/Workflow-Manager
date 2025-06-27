@@ -8,7 +8,7 @@ use RedBeanPHP\R;
 $dbHost = '127.0.0.1';
 $dbName = 'workflow';
 $dbUser = 'root';
-$dbPass = 'Vssc123!@#'; // your DB password
+$dbPass = '273413'; // your DB password
 
 // DSN format: mysql:host=HOST;dbname=DB
 R::setup("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
