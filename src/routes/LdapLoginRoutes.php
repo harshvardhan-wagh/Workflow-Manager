@@ -12,7 +12,6 @@ class LdapLoginRoutes
     public static function handle($uri, $method)
     {
         if ($uri === '/api/ldap/login' && $method === 'POST') {
-
             // AuthMiddleware::verify();
             $input = Request::input();
             $user;
@@ -27,7 +26,8 @@ class LdapLoginRoutes
                 $result = $controller->login($input);
                 Response::success([
                     'message' => 'Login successful',
-                    'user' => $result,
+                    'token' => $result['token'],
+                    'user' => $result['user']
                 ], 200);
             } catch (\Throwable $e) {
                 Response::error('An error occurred during login: ' . $e->getMessage(), 500);
